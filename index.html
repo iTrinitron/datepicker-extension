@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="styles/bootstrap.css">
+  <link rel="stylesheet" href="styles/style.css"/>
+  <link rel="stylesheet" href="../dist/index.css"/>
+</head>
+<body ng-app="sample">
+  <div class="row-fluid">
+    <div class="span6">
+      <h2>Calendar</h2>
+
+ 
+      
+      
+      <!-- Module is defined by this class -->
+      <div class="dropdown">
+        <input class="dropdown-toggle" type="text" value='{{(a|date)||"pick start"}}'>
+
+        <input class="dropdown-toggle" type="text" value='{{(b|date)||"pick end"}}'>
+
+        <div class="dropdown-menu" ng-click="$event.preventDefault();$event.stopPropagation()">
+          <div date-range start="a" end="b"></div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js"></script>
+  <script src="scripts/datePicker.js"></script>
+  <script src="scripts/datePickerUtils.js"></script>
+  <script src="scripts/dateRange.js"></script>
+  <script src="scripts/input.js"></script>
+  <script>
+    angular.module('sample', ['datePicker', 'ui.bootstrap']);
+  </script>
+</body>
+</html>
