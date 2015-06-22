@@ -35,18 +35,35 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
     scope: {
       model: '=datePicker',
       after: '=?',
-      before: '=?'
+      before: '=?',
+      pid: '='
     },
     link: function (scope, element, attrs, ngModel) {
-
+        console.log(scope.pid);
+      /*
+       * Listener for broadcast
+       */
+      scope.$on("next", function() {
+         console.log("received broadcast");
+         scope.next();
+      });
+      /*
+       * Listener for broadcast
+       */
+      scope.$on("prev", function() {
+         console.log("received broadcast");
+         scope.prev();
+      });  
+        
       var arrowClick = false;
+
+      console.log("TEST SCOPE: " + scope.test);
 
       scope.date = new Date(scope.model || new Date());
       scope.views = datePickerConfig.views.concat();
       scope.view = attrs.view || datePickerConfig.view;
       scope.now = new Date();
       scope.template = attrs.template || datePickerConfig.template;
-
       var step = parseInt(attrs.step || datePickerConfig.step, 10);
       var partial = !!attrs.partial;
 
@@ -54,6 +71,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       if(ngModel)
       {
         if (angular.isDefined(attrs.minDate)) {
+          console.log("Min defined");
           var minVal;
           ngModel.$validators.min = function (value) {
             return !datePickerUtils.isValidDate(value) || angular.isUndefined(minVal) || value >= minVal;
@@ -94,6 +112,8 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       };
 
       scope.setDate = function (date) {
+        
+          
         if(attrs.disabled) {
           return;
         }
@@ -119,6 +139,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
           /*falls through*/
           case 'date':
             scope.model.setDate(date.getDate());
+            scope.$emit('dateChange', scope.pid, date);
           /*falls through*/
           case 'month':
             scope.model.setMonth(date.getMonth());
@@ -179,7 +200,6 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       scope.$watch(watch, update);
 
       scope.next = function (delta) {
-          console.log("NEXT");
         var date = scope.date;
         delta = delta || 1;
         switch (scope.view) {

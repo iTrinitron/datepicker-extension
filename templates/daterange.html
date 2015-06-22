@@ -1,12 +1,18 @@
 <div>
     <table>
         <tr>
+            <div style="position: relative; left: 30px; float: left; cursor: pointer;" ng-click="prev()">&lsaquo;</div>
+            <div style="position: relative; right: 30px; float: right; cursor: pointer;" ng-click="next()">&rsaquo;</i></div>
+        </tr>
+        <tr>
             <td valign="top">
-                <div date-picker="start" ng-disabled="disableDatePickers"  class="date-picker" date after="start" before="end" min-view="date" max-view="date"></div>
+                <div date-picker="start" pid="0" control="controlLink" ng-disabled="disableDatePickers"  min-date="{{ 'Mon Jun 22 2015 11:44:11 GMT-0700 (PDT)' | date}}" class="date-picker" date after="start" before="end" min-view="date" max-view="date"></div>
             </td>
             <td valign="top">
-                <div date-picker="end" ng-disabled="disableDatePickers"  class="date-picker" date after="start" before="end"  min-view="date" max-view="date"></div>
+                <div date-picker="end" pid="1" control="controlLink" ng-disabled="disableDatePickers"  min-date="{{ date|date}}" class="date-picker" date after="start" before="end"  min-view="date" max-view="date"></div>
             </td>
         </tr>
     </table>
 </div>
+
+
