@@ -25,10 +25,13 @@ Module.constant('dateTimeConfig', {
   position: 'relative'
 });
 
+
+
 Module.directive('dateTimeAppend', function () {
   return {
     link: function (scope, element) {
-      element.bind('click', function () {
+      element.bind('click', function (e) {
+          console.log("e is: " + e);
         element.find('input')[0].focus();
       });
     }

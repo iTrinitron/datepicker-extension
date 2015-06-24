@@ -1,12 +1,14 @@
-<!-- Module is defined by this class -->
+<!-- AngularJS datePickerApp Module -->
 <div class="dropdown">
-    <input class="dropdown-toggle" type="text" value='{{selectedStartDate}}'>
+    <!-- Start Date Input -->
+    <input class="dropdown-toggle" type="text" ng-click="startCal = true" value='{{selectedStartDate}}'>
 
-    <input class="dropdown-toggle" type="text" value='{{selectedEndDate}}'>
-
+    <!-- End Date Input -->
+    <input class="dropdown-toggle" type="text" ng-click="startCal = false" value='{{selectedEndDate}}'>
+ 
+    <!-- Calendar Dropdown -->
     <div class="dropdown-menu" ng-click="$event.preventDefault();$event.stopPropagation()">
-      <!-- Define the variables a, b -->
-      <!-- <div date-range start="{{selectedStartDate}}" end="{{selectedEndDate}}"></div> -->
-      <div date-range start="a" end="b"></div>
+        <!-- dateRange Directive -->
+        <div date-range start="a" end="b" start-month="10"></div>
     </div>
 </div>

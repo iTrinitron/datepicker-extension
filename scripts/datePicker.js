@@ -29,8 +29,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
 
   //noinspection JSUnusedLocalSymbols
   return {
-    // this is a bug ?
-    require:'?ngModel',
+    require: ['?ngModel', '^datePickerApp'],
     template: '<div ng-include="template"></div>',
     scope: {
       model: '=datePicker',
@@ -38,28 +37,35 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       before: '=?',
       pid: '='
     },
-    link: function (scope, element, attrs, ngModel) {
-        console.log(scope.pid);
-      /*
-       * Listener for broadcast
-       */
+    controller: function($scope) {
+        $scope.log = function(e) {
+            console.log("THIS WAS CLICKEED ON THE CALENDAR" + e);
+        };
+    },
+    link: function (scope, element, attrs, cntrl) {
+        var ngModel = cntrl[0];
+        var datePickerApp = cntrl[1];
+        
+       /*
+        * Listener
+        * 
+        * Changes the months whenever the next/prev button is clicked on the
+        * dateRange directive
+        * 
+        * @author Michael C
+        */
       scope.$on("next", function() {
-         console.log("received broadcast");
          scope.next();
       });
-      /*
-       * Listener for broadcast
-       */
       scope.$on("prev", function() {
-         console.log("received broadcast");
          scope.prev();
       });  
-        
+      
       var arrowClick = false;
 
-      console.log("TEST SCOPE: " + scope.test);
-
-      scope.date = new Date(scope.model || new Date());
+      //Set the date of the datePicker THIS IS THE DEFAULT CALENDAR POSITION
+      scope.date = new Date(datePickerApp.getDefaultDate(scope.pid));
+      
       scope.views = datePickerConfig.views.concat();
       scope.view = attrs.view || datePickerConfig.view;
       scope.now = new Date();
@@ -68,6 +74,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       var partial = !!attrs.partial;
 
       //if ngModel, we can add min and max validators
+      /*
       if(ngModel)
       {
         if (angular.isDefined(attrs.minDate)) {
@@ -80,7 +87,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
             minVal = new Date(val);
             ngModel.$validate();
           });
-        }
+        } 
 
         if (angular.isDefined(attrs.maxDate)) {
           var maxVal;
@@ -92,7 +99,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
             ngModel.$validate();
           });
         }
-      }
+      } */
       //end min, max date validator
 
       /** @namespace attrs.minView, attrs.maxView */
@@ -112,8 +119,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       };
 
       scope.setDate = function (date) {
-        
-          
+          console.log("setDate 1:" + date);
         if(attrs.disabled) {
           return;
         }
@@ -124,9 +130,10 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
 
           scope.model = new Date(scope.model || date);
           //if ngModel , setViewValue and trigger ng-change, etc...
+          
           if(ngModel) {
             ngModel.$setViewValue(scope.date);
-          }
+          } 
 
           var view = partial ? 'minutes' : scope.view;
           //noinspection FallThroughInSwitchStatementJS
@@ -138,8 +145,10 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
             scope.model.setHours(date.getHours());
           /*falls through*/
           case 'date':
-            scope.model.setDate(date.getDate());
-            scope.$emit('dateChange', scope.pid, date);
+              console.log("this is the enter:" + date.getDate());
+            //scope.model.setDate(date.getDate());
+            console.log("setDate 2:" + scope.date);
+            scope.$emit('dateChange', scope.date);
           /*falls through*/
           case 'month':
             scope.model.setMonth(date.getMonth());
@@ -159,6 +168,14 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
           scope.$emit('hidePicker');
         }
       };
+      
+      /*
+       * @author Michael
+       */
+      scope.$on('hidePickers', function() {
+          element.addClass('hidden');
+          scope.$emit('hidePicker');
+      });
 
       function update() {
         var view = scope.view;
@@ -177,6 +194,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
           scope.months = datePickerUtils.getVisibleMonths(date);
           break;
         case 'date':
+            console.log("visible weeks are based on " + date)
           scope.weekdays = scope.weekdays || datePickerUtils.getDaysOfWeek();
           scope.weeks = datePickerUtils.getVisibleWeeks(date);
           break;
