@@ -1,13 +1,13 @@
 <!-- AngularJS datePickerApp Module -->
 <div class="dropdown">
     <!-- Start Date Input -->
-    <input class="dropdown-toggle" type="text" ng-click="startCal = true" value='{{selectedStartDate}}'>
+    <input class="dropdown-toggle" type="text" ng-click="startCal = true; isVisible = true" value='{{selectedStartDate}}'>
 
     <!-- End Date Input -->
-    <input class="dropdown-toggle" type="text" ng-click="startCal = false" value='{{selectedEndDate}}'>
+    <input class="dropdown-toggle" type="text" ng-click="startCal = false; isVisible = true" value='{{selectedEndDate}}'>
  
     <!-- Calendar Dropdown -->
-    <div class="dropdown-menu" ng-click="$event.preventDefault();$event.stopPropagation()">
+    <div class="dropdown-menu" ng-show="isVisible" ng-click="$event.preventDefault();$event.stopPropagation()">
         <!-- dateRange Directive -->
         <div date-range start="a" end="b" start-month="10"></div>
     </div>

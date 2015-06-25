@@ -1,0 +1,99 @@
+[date-range] {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    width: 590px;
+    height: 316px;
+}
+
+[date-range] .dateRangeContainer {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+}
+
+[date-range] [date-picker] {
+    margin-top: 8px;
+    float: left;
+}
+
+[date-range] .right {
+    float: right;
+}
+
+[date-range] [date-picker] .switch {
+    font-weight: normal;
+    text-transform: uppercase;
+    width: auto;
+    text-align: center;
+    border-bottom: 1px solid #999999;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+}
+
+[date-range] th {
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+[date-range] .dayOfWeekBox {
+    color: #666666;
+    border-top: 1px solid gray;
+}
+
+[date-range] [date-picker] .active.after.before, [date-range] [date-picker] .after.before {
+    background-color: #00c0cd;
+    background-image: none; /* The original datePicker uses a linear gradient image  */
+}
+
+[date-range] [date-picker] .day {
+    color: #00c0cd;
+}
+
+[date-range] [date-picker] .disabled {
+    color: #cccccc;
+}
+
+[date-range] [date-picker] .disabled:hover {
+    background: inherit;
+    cursor: default;
+}
+
+[date-picker] td {
+    height: 33px;
+    width: 33px;
+}
+
+[date-picker] span {
+    border-radius: 0px;
+    height: 33px;
+    line-height: 33px;
+}
+
+[date-range] .arrow {
+    position: relative; 
+    cursor: pointer;
+    color: #00c0cd;
+    font-size: 36px;
+    top: 4px;
+}
+
+[date-range] .leftArrow {
+    left: 30px; 
+    float: left; 
+}
+
+[date-range] .rightArrow {
+    right: 30px; 
+    float: right; 
+}
+
+.dropdown-menu {
+    margin-top: 5px;
+    box-shadow: none;
+    border-radius: 0px;
+}
+
+[date-range] [date-picker] .after.before.disabled {
+    background-color: inherit;
+}
+

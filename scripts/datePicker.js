@@ -38,9 +38,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       pid: '='
     },
     controller: function($scope) {
-        $scope.log = function(e) {
-            console.log("THIS WAS CLICKEED ON THE CALENDAR" + e);
-        };
+        
     },
     link: function (scope, element, attrs, cntrl) {
         var ngModel = cntrl[0];
@@ -118,9 +116,9 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         }
       };
 
-      scope.setDate = function (date) {
-          console.log("setDate 1:" + date);
-        if(attrs.disabled) {
+      scope.setDate = function (date, month) {
+        //Do nothing if the date is disabled
+        if(attrs.disabled || scope.isDisabled(date, month)) {
           return;
         }
         scope.date = date;
@@ -145,9 +143,6 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
             scope.model.setHours(date.getHours());
           /*falls through*/
           case 'date':
-              console.log("this is the enter:" + date.getDate());
-            //scope.model.setDate(date.getDate());
-            console.log("setDate 2:" + scope.date);
             scope.$emit('dateChange', scope.date);
           /*falls through*/
           case 'month':
@@ -276,6 +271,29 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
 
       scope.isSameMinutes = function (date) {
         return datePickerUtils.isSameMinutes(scope.model, date);
+      };
+      
+      /*
+       * isDisabled
+       * 
+       * Checks to see if a given day is within the valid dates
+       * -the day is on or after today's date
+       * -the day is within the given month it appears in
+       * 
+       * @param javascript Date object day
+       * @param javascript Date object date
+       * @return boolean
+       * 
+       * @author Michael C
+       */
+      scope.isDisabled = function(day, date) {
+          if((day.getMonth() != date.getMonth())) {
+              return true;
+          }
+          if(day < new Date()) {
+              return true;
+          }
+          return false;
       };
 
       scope.isNow = function (date) {
