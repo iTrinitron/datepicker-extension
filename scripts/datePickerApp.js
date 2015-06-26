@@ -10,10 +10,11 @@
 //Build off of the datePicker module
 var Module = angular.module('datePicker');
 
+Module
 /*
  * datePickerApp Directive
  */
-Module.directive('datePickerApp', function () {
+.directive('datePickerApp', function () {
   return {
     templateUrl: 'templates/datepickerapp.html',
     scope: {
@@ -70,7 +71,6 @@ Module.directive('datePickerApp', function () {
         //Initialize the start/end date inputs as empty containers
         scope.selectedStartDate = null;
         scope.selectedEndDate = null;
-        scope.isVisible = false;
         
         /*
          * formatDateInput
@@ -101,15 +101,6 @@ Module.directive('datePickerApp', function () {
                    break;
            }
         });
-        
-        scope.$on('closeDateRange', function() {
-           scope.isVisible = false; 
-        });
-        
-        scope.$watch('isVisible', function() {
-           console.log(scope.isVisible); 
-        });
-        
     }
   };
 });

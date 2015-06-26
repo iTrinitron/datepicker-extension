@@ -1,6 +1,5 @@
 <div ng-switch="view">
   <div ng-switch-when="date">
-
     <div class="switch" ng-click="setView('month')" ng-bind="date|date:'MMMM'" test="startMonth" class="month"></div>
     <table>
       <thead>
@@ -20,12 +19,10 @@
       </tbody>
     </table>
   </div>
+</div>
     
-    
-    
-    
-    
-    
+  <!-- The below snippet allows for the full power of g00fy's dateRange -->
+  <!--
   <div ng-switch-when="year">
     <table>
       <thead>
@@ -108,4 +105,4 @@
       </tbody>
     </table>
   </div>
-</div>
+  -->

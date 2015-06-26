@@ -1,3 +1,18 @@
+/* 
+ * datePicker Directive
+ * @library https://github.com/g00fy-/angular-datepicker
+ * 
+ * date: 6/22/2015
+ * @modified Michael Chin
+ */
+
+/*
+ * For the modified version of dateRange, only the 'date' view is used.  All 
+ * other views are untested, and may not functinoal correctly.
+ * i.e. scope.view = 'date' ALWAYS
+ * 
+ */
+
 'use strict';
 
 var Module = angular.module('datePicker', []);
@@ -142,8 +157,13 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
           case 'hours':
             scope.model.setHours(date.getHours());
           /*falls through*/
+          
+          //This is the default case set by dateRange --
           case 'date':
+            //Let the dateRange know that it has been changed
             scope.$emit('dateChange', scope.date);
+            
+            
           /*falls through*/
           case 'month':
             scope.model.setMonth(date.getMonth());
@@ -189,7 +209,6 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
           scope.months = datePickerUtils.getVisibleMonths(date);
           break;
         case 'date':
-            console.log("visible weeks are based on " + date)
           scope.weekdays = scope.weekdays || datePickerUtils.getDaysOfWeek();
           scope.weeks = datePickerUtils.getVisibleWeeks(date);
           break;
