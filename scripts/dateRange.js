@@ -33,7 +33,8 @@ Module.directive('dateRange', function () {
              */
             scope.next = function () {
                 scope.$broadcast("next");
-                console.log(scope.start);
+                console.log("Start:" + scope.start);
+                console.log("End:" + scope.end);
             };
             scope.prev = function() {
                 scope.$broadcast("prev");
@@ -63,9 +64,7 @@ Module.directive('dateRange', function () {
             * @author Michael C
             */
            function getNextDay(date) {
-               var tomorrow = new Date(date);
-               tomorrow.setDate(tomorrow.getDate() + 1);
-               return tomorrow;
+               return cntrl.getDayAfterNumDays(date, 1);
            }
       
             /*
@@ -101,7 +100,7 @@ Module.directive('dateRange', function () {
                 }
                 
                 //Autoclose after selection
-                scope.$emit('closeDateRange');
+                cntrl.closeDateRange();
             }
             
             /*

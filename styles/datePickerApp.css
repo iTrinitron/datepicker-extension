@@ -135,6 +135,14 @@ body {
 }
 
 /*
+ * Headers for the days of the week
+ */
+[date-range] th:hover {
+    background: inherit;
+    cursor: default;
+}
+
+/*
  * Days that are inactive
  */
 [date-range] [date-picker] .disabled {

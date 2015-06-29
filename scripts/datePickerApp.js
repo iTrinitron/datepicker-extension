@@ -18,16 +18,44 @@ Module
   return {
     templateUrl: 'templates/datepickerapp.html',
     scope: {
-        startMonth: '='
+        startMonth: '=',
+        maxStartDate: '@'
     },
     //Define controller functions to be passed down to the datePicker directive
     controller: function($scope) {
-        $scope.startCal = null;
-        
         //Default month to start the datePicker calendars at
         this.startDate = new Date();
+        //Flag to check whether we are picking the start or end date
+        $scope.startCal = null;
+        $scope.isOpen = false; //variable controls whether or not the dateRange is visible
+        
+        
+        
+        /*
+         * Mutators to change the visibility of the dateRange
+         * @return boolean
+         */
+        $scope.openDateRange = function() {
+            $scope.isOpen = true;
+        };
+        this.closeDateRange = function() {
+            $scope.isOpen = false;
+        };
+        
+        this.getDayAfterNumDays = function(date, numDays) {
+            var newDay = new Date(date);
+            newDay.setDate(newDay.getDate() + parseInt(numDays));
+            return newDay;
+        };
+        
+        //Pass the variable down
+        this.maxStartDate = this.getDayAfterNumDays(new Date(), $scope.maxStartDate);
+        
+        /*
+         * Accessor for the startCal flag
+         * @return boolean
+         */
         this.getStartCal = function() {
-            //console.log("input startCal is " + $scope.startCal);
             return $scope.startCal;
         };
         
@@ -61,9 +89,7 @@ Module
             if (date == 11) {
                 return new Date(date.getFullYear() + 1, 0, 1);
             }
-            
             return new Date(date.getFullYear(), date.getMonth() + 1, 1);
-            
         };
          
     },
@@ -95,6 +121,7 @@ Module
            switch(pickerId) {
                case 0: 
                    scope.selectedStartDate = date; 
+                   
                    break;
                case 1: 
                    scope.selectedEndDate = date;

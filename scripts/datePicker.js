@@ -141,7 +141,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         var nextView = scope.views[scope.views.indexOf(scope.view) + 1];
         if ((!nextView || partial) || scope.model) {
 
-          scope.model = new Date(scope.model || date);
+          scope.model = new Date(date);
           //if ngModel , setViewValue and trigger ng-change, etc...
           
           if(ngModel) {
@@ -161,7 +161,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
           //This is the default case set by dateRange --
           case 'date':
             //Let the dateRange know that it has been changed
-            scope.$emit('dateChange', scope.date);
+            scope.$emit('dateChange', scope.model);
             
             
           /*falls through*/
@@ -306,6 +306,13 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
        * @author Michael C
        */
       scope.isDisabled = function(day, date) {
+          //If the day is past the max-start-date
+          if(day > datePickerApp.maxStartDate) {
+              return true;
+          }
+          //If the day is past the start date
+          
+          
           if((day.getMonth() != date.getMonth())) {
               return true;
           }
