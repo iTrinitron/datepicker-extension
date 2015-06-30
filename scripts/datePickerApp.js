@@ -10,7 +10,12 @@
 //Build off of the datePicker module
 var Module = angular.module('datePicker');
 
-Module
+Module.controller('MyCtrl', ['$scope', function ($scope) {
+    $scope.formData = {};
+    $scope.formData.fromDate = null;
+    $scope.formData.toDate = null;
+
+}])
 /*
  * datePickerApp Directive
  */
@@ -19,7 +24,10 @@ Module
     templateUrl: 'templates/datepickerapp.html',
     scope: {
         startMonth: '=',
-        maxStartDate: '@'
+        maxStartDate: '@',
+        selectedStartDate: '=fromDate',
+        selectedEndDate: '=toDate',
+        onCalClick: '@'
     },
     //Define controller functions to be passed down to the datePicker directive
     controller: function($scope) {
@@ -29,7 +37,27 @@ Module
         $scope.startCal = null;
         $scope.isOpen = false; //variable controls whether or not the dateRange is visible
         
+        this.onCalClick = ($scope.onCalClick || "close");
         
+        /*
+         * updateDateRange
+         * 
+         * Handles the various actions that can occur when the calendar is clicked
+         * 
+         */
+        this.updateDateRange = function() {
+            //Close the calendar
+            if(this.onCalClick === "close") {
+                this.closeDateRange(); 
+            }
+            //Rotate from start --> end --> close
+            else if(this.onCalClick === "rotate") {
+                $scope.startCal ? this.toggleStartCal() : this.closeDateRange();
+            }
+            else {
+                //Do nothing...
+            }
+        };
         
         /*
          * Mutators to change the visibility of the dateRange
@@ -42,7 +70,29 @@ Module
             $scope.isOpen = false;
         };
         
+        /*
+         * toggleStartCal
+         * 
+         * Toggles $scope.startCal
+         * 
+         */
+        this.toggleStartCal = function() {
+            $scope.startCal = !$scope.startCal;
+        };
+        
+        /*
+         * getdayAfterNumDays
+         * 
+         * Returns a new date object that is numDays amount of days past the
+         * given date object
+         * 
+         * @param javascript Date object
+         * @param int numDays
+         * @returns javascript Date object
+         */
         this.getDayAfterNumDays = function(date, numDays) {
+            console.log(date);
+            console.log(numDays);
             var newDay = new Date(date);
             newDay.setDate(newDay.getDate() + parseInt(numDays));
             return newDay;
@@ -101,6 +151,8 @@ Module
         /*
          * formatDateInput
          * 
+         * @unused 
+         * 
          * @param javascript Date object
          * @return string "mm/dd/yyyy"
          */
@@ -117,11 +169,9 @@ Module
          * 
          */
         scope.$on('dateChange2', function(event, pickerId, date) {
-           date = formatDateInput(date);
            switch(pickerId) {
                case 0: 
-                   scope.selectedStartDate = date; 
-                   
+                   scope.selectedStartDate = date;
                    break;
                case 1: 
                    scope.selectedEndDate = date;

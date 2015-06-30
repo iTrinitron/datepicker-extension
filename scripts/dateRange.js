@@ -33,8 +33,6 @@ Module.directive('dateRange', function () {
              */
             scope.next = function () {
                 scope.$broadcast("next");
-                console.log("Start:" + scope.start);
-                console.log("End:" + scope.end);
             };
             scope.prev = function() {
                 scope.$broadcast("prev");
@@ -84,7 +82,6 @@ Module.directive('dateRange', function () {
                 if(cntrl.getStartCal()) {
                     //Update the new start value
                     scope.start = value; 
-   
                     //If the end date is not set or the new start is past the end
                     if(scope.end == null || value > scope.end.getTime()) {
                         scope.end = getNextDay(value);
@@ -98,9 +95,8 @@ Module.directive('dateRange', function () {
                         scope.start = new Date();
                     }
                 }
-                
                 //Autoclose after selection
-                cntrl.closeDateRange();
+                cntrl.updateDateRange();
             }
             
             /*

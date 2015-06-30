@@ -122,7 +122,8 @@ body {
 /*
  * Days that are selected
  */
-[date-range] [date-picker] .active.after.before, [date-range] [date-picker] .after.before {
+[date-range] [date-picker] .active.after.before, [date-range] [date-picker] .after.before, [date-range] [date-picker] .active.after {
+    color: #FFF;
     background-color: #00c0cd;
     background-image: none; /* The original datePicker uses a linear gradient image  */
 }

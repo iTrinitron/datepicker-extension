@@ -11,6 +11,10 @@
  * other views are untested, and may not functinoal correctly.
  * i.e. scope.view = 'date' ALWAYS
  * 
+ * scope.model represents the start/end date visible on the datePicker.  Never 
+ * allow it to change itself.  Always modify scope.model through it's binding
+ * on model: '=datePicker'
+ * 
  */
 
 'use strict';
@@ -141,7 +145,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         var nextView = scope.views[scope.views.indexOf(scope.view) + 1];
         if ((!nextView || partial) || scope.model) {
 
-          scope.model = new Date(date);
+          //scope.model = new Date(date);
           //if ngModel , setViewValue and trigger ng-change, etc...
           
           if(ngModel) {
@@ -161,9 +165,8 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
           //This is the default case set by dateRange --
           case 'date':
             //Let the dateRange know that it has been changed
-            scope.$emit('dateChange', scope.model);
-            
-            
+            scope.$emit('dateChange', new Date(date));
+            break;
           /*falls through*/
           case 'month':
             scope.model.setMonth(date.getMonth());
@@ -311,7 +314,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
               return true;
           }
           //If the day is past the start date
-          
+          console.log(datePickerApp);
           
           if((day.getMonth() != date.getMonth())) {
               return true;

@@ -1,17 +1,21 @@
 <!-- AngularJS datePickerApp Module -->
 <div class="dropdown" dropdown auto-close="outsideClick" is-open="isOpen">
-    <!-- Start Date Input -->
-    <input class="dropdown-toggle" type="text" ng-click="startCal = true; openDateRange()" value='{{selectedStartDate}}'>
+    <!-- Start Date Input 
+    <input class="dropdown-toggle" type="date" ng-click="startCal = true; openDateRange()" ng-model='selectedStartDate'>
 
-    <!-- End Date Input -->
-    <input class="dropdown-toggle" type="text" ng-click="startCal = false; openDateRange()" value='{{selectedEndDate}}'>
+    <!-- End Date Input 
+    <input class="dropdown-toggle" type="date" ng-click="startCal = false; openDateRange()" ng-model='selectedEndDate'>
+-->
+    <!-- Single Daterange Input -->
+    <input class="dropdown-toggle" type="date" ng-click="startCal = true; openDateRange()" value="{{(selectedStartDate|date:'yyyy-MM-dd')}} - {{(selectedEndDate|date:'yyyy-MM-dd')}}" readonly/>
  
+    
     <!-- Calendar Dropdown -->
     <div class="dropdown-menu"  >
         <!-- Triangle Polygon -->
         <div class="tri-up" ng-class="{'triangle-left':startCal, 'triangle-right':!startCal}"></div>
         <!-- dateRange Directive -->
         
-        <div date-range start="a" end="b" start-month="10"></div>
+        <div date-range start="selectedStartDate" end="selectedEndDate" start-month="10"></div>
     </div>
 </div>
