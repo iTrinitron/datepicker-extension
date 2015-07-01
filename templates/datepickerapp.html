@@ -1,28 +1,47 @@
 <!-- AngularJS datePickerApp Module -->
 <div class="dropdown" dropdown auto-close="outsideClick" is-open="isOpen">
-    <!-- Start Date Input -->
-    <div style="width:200px;display:inline-block;margin-right:30px;">
-        <div class="input-group">
-            <span  class="input-group-addon fa fa-calendar" ng-click="setStartCal(true);openDateRange()"></span>
-            <input class="dropdown-toggle form-control unstyled" type="date" ng-click="setStartCal(true);openDateRange()"  ng-model='selectedStartDate' autofocus>
+    {{selectedStartDate}}
+    {{selectedEndDate}}
+    <div ng-switch="viewMode">
+        <!-- Double Daterange Input -->
+        <div ng-switch-when="doubleDate">
+            <!-- Start Date Input -->
+            <div style="width:200px;display:inline-block;margin-right:30px;">
+                <div class="input-group">
+                    <span  class="input-group-addon fa fa-calendar" ng-click="setStartCal(true);openDateRange()"></span>
+                    <input class="dropdown-toggle form-control unstyled" type="date" ng-click="setStartCal(true);openDateRange()"  ng-model='$parent.selectedStartDate'>
+                </div>
+            </div>
+            <!-- End Date Input -->
+            <div style="width:200px;display:inline-block;margin-right:30px;">
+                <div class="input-group">
+                    <span  class="input-group-addon fa fa-calendar" ng-click="openDateRange();setStartCal(false);"></span>
+                    <input class="dropdown-toggle form-control unstyled" type="date" ng-click="setStartCal(false);openDateRange()"  ng-model='$parent.selectedEndDate'>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Single Daterange Input -->
+        <div ng-switch-when="singleDate">
+            <div class="form-group" style="width:300px;">
+                <div class="input-group">
+                    <span  class="input-group-addon fa fa-calendar" ng-click="setStartCal(true);openDateRange()"></span>
+                    <input class="dropdown-toggle form-control unstyled inline single left" type="date" ng-click="setStartCal(true); openDateRange()"  ng-model='$parent.selectedStartDate'>
+                    <input class="dropdown-toggle form-control unstyled inline single right" type="date" ng-click="setStartCal(true); openDateRange()"  ng-model='$parent.selectedEndDate'>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- End Date Input -->
-    <div style="width:200px;display:inline-block;margin-right:30px;">
-        <div class="input-group" ng-click="console.log('HELLO?')" >
-            <span  class="input-group-addon fa fa-calendar" ng-click="openDateRange();setStartCal(false);"></span>
-            <input class="dropdown-toggle form-control unstyled" type="date" ng-click="setStartCal(false);openDateRange()"  ng-model='selectedEndDate'>
-        </div>
+    
+    <!-- Calendar Dropdown -->
+    <div class="dropdown-menu"  >
+        <!-- Triangle Polygon -->
+        <div class="tri-up" ng-class="{'triangle-left':startCal, 'triangle-right':!startCal}"></div>
+        <!-- dateRange Directive -->
+        
+        <div date-range start="selectedStartDate" end="selectedEndDate" start-month="10"></div>
     </div>
-
-    <!-- Single Daterange Input -->
-    <div class="form-group" style="width:300px;">
-        <div class="input-group">
-            <span  class="input-group-addon fa fa-calendar" ng-click="setStartCal(true);openDateRange()"></span>
-            <input class="dropdown-toggle form-control unstyled inline single left" type="date" ng-click="setStartCal(true); openDateRange()"  ng-model='selectedStartDate'>
-            <input class="dropdown-toggle form-control unstyled inline single right" type="date" ng-click="setStartCal(true); openDateRange()"  ng-model='selectedEndDate'>
-        </div>
-    </div>
+</div>
     
     <!-- Calendar Dropdown -->
     <div class="dropdown-menu"  >

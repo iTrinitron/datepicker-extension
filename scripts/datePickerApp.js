@@ -27,6 +27,7 @@ Module.controller('MyCtrl', ['$scope', function ($scope) {
         maxStartDate: '@',
         selectedStartDate: '=fromDate',
         selectedEndDate: '=toDate',
+        viewMode: '@',
         onCalClick: '@'
     },
     //Define controller functions to be passed down to the datePicker directive
@@ -172,6 +173,7 @@ Module.controller('MyCtrl', ['$scope', function ($scope) {
          * 
          */
         scope.$on('dateChange2', function(event, pickerId, date) {
+           //date = formatDateInput(date);
            switch(pickerId) {
                case 0: 
                    scope.selectedStartDate = date;

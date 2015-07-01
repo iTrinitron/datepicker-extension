@@ -17,13 +17,9 @@
   <div class="row-fluid">
     <div class="span6">
       <h2>Calendar</h2> 
-      
-      <div ng-controller="MyCtrl">
-          <!--{{formData.fromDate}}
-          {{formData.toDate}}-->
-        <div date-picker-app on-cal-click="rotate" max-start-date="330" data-from-date="formData.fromDate" data-to-date="formData.toDate"></div>
-        Hello 
-      </div>
+ 
+        <div date-picker-app on-cal-click="rotate" view-mode="doubleDate" max-start-date="330" data-from-date="formData.fromDate" data-to-date="formData.toDate"></div>
+
 
         
     </span>
