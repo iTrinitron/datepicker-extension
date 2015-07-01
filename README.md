@@ -6,3 +6,9 @@ BUILD
 ```
 grunt
 ```
+
+RUN
+
+```
+index.html
+```
