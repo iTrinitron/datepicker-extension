@@ -728,6 +728,10 @@ Module.controller('MyCtrl', ['$scope', function ($scope) {
         //Pass the variable down
         this.maxStartDate = this.getDayAfterNumDays(new Date(), $scope.maxStartDate);
         
+        $scope.setStartCal = function(value) {
+            $scope.startCal = value;
+        };
+        
         /*
          * Accessor for the startCal flag
          * @return boolean

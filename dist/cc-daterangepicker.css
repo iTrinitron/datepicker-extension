@@ -479,28 +479,44 @@ body {
   font-size: 15px;
   width: 590px;
   height: 316px;
+  /*
+     * dateRange inner container
+     */
+  /*
+     * Each datePicker container
+     */
+  /*
+     * Arrows to switch month ranges
+     */
+  /*
+     * Month header of each datePicker container -- ex. "July"
+     */
+  /* Sub-header of each datePicker container -- ex. days of the week "S M T.." */
 }
-/*
- * dateRange inner container
- */
 [date-range] .dateRangeContainer {
   margin-left: auto;
   margin-right: auto;
   padding: 15px;
 }
-/*
- * Each datePicker container
- */
 [date-range] [date-picker] {
   margin-top: 8px;
   float: left;
+  /*
+        * Days
+        */
+}
+[date-range] [date-picker] td {
+  height: 33px;
+  width: 33px;
+}
+[date-range] [date-picker] span {
+  border-radius: 0px;
+  height: 33px;
+  line-height: 33px;
 }
 [date-range] .right {
   float: right;
 }
-/*
- * Arrows to switch month ranges
- */
 [date-range] .arrow {
   position: relative;
   cursor: pointer;
@@ -516,9 +532,6 @@ body {
   right: 30px;
   float: right;
 }
-/*
- * Month header of each datePicker container -- ex. "July"
- */
 [date-range] [date-picker] .switch {
   font-weight: normal;
   text-transform: uppercase;
@@ -528,7 +541,6 @@ body {
   padding-bottom: 6px;
   margin-bottom: 6px;
 }
-/* Sub-header of each datePicker container -- ex. days of the week "S M T.." */
 [date-range] .dayOfWeekBox {
   color: #666666;
   border-top: 1px solid gray;
@@ -537,18 +549,6 @@ body {
 }
 [date-range] th {
   font-weight: normal;
-}
-/*
- * Days
- */
-[date-picker] td {
-  height: 33px;
-  width: 33px;
-}
-[date-picker] span {
-  border-radius: 0px;
-  height: 33px;
-  line-height: 33px;
 }
 /*
  * Days that are selected

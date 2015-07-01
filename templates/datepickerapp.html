@@ -1,14 +1,28 @@
 <!-- AngularJS datePickerApp Module -->
 <div class="dropdown" dropdown auto-close="outsideClick" is-open="isOpen">
     <!-- Start Date Input -->
-    <input class="dropdown-toggle" type="date" ng-click="startCal = true; openDateRange()" ng-model='selectedStartDate'>
-
+    <div style="width:200px;display:inline-block;margin-right:30px;">
+        <div class="input-group">
+            <span  class="input-group-addon fa fa-calendar" ng-click="setStartCal(true);openDateRange()"></span>
+            <input class="dropdown-toggle form-control unstyled" type="date" ng-click="setStartCal(true);openDateRange()"  ng-model='selectedStartDate' autofocus>
+        </div>
+    </div>
     <!-- End Date Input -->
-    <input class="dropdown-toggle" type="date" ng-click="startCal = false; openDateRange()" ng-model='selectedEndDate'>
+    <div style="width:200px;display:inline-block;margin-right:30px;">
+        <div class="input-group" ng-click="console.log('HELLO?')" >
+            <span  class="input-group-addon fa fa-calendar" ng-click="openDateRange();setStartCal(false);"></span>
+            <input class="dropdown-toggle form-control unstyled" type="date" ng-click="setStartCal(false);openDateRange()"  ng-model='selectedEndDate'>
+        </div>
+    </div>
 
     <!-- Single Daterange Input -->
-    <input class="dropdown-toggle" type="date" ng-click="startCal = true; openDateRange()" value="{{(selectedStartDate|date:'yyyy-MM-dd')}} - {{(selectedEndDate|date:'yyyy-MM-dd')}}" readonly/>
- 
+    <div class="form-group" style="width:300px;">
+        <div class="input-group">
+            <span  class="input-group-addon fa fa-calendar" ng-click="setStartCal(true);openDateRange()"></span>
+            <input class="dropdown-toggle form-control unstyled inline single left" type="date" ng-click="setStartCal(true); openDateRange()"  ng-model='selectedStartDate'>
+            <input class="dropdown-toggle form-control unstyled inline single right" type="date" ng-click="setStartCal(true); openDateRange()"  ng-model='selectedEndDate'>
+        </div>
+    </div>
     
     <!-- Calendar Dropdown -->
     <div class="dropdown-menu"  >
