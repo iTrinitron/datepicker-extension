@@ -314,7 +314,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
               return true;
           }
           //If the day is past the start date
-          console.log(datePickerApp);
+          //console.log(datePickerApp);
           
           if((day.getMonth() != date.getMonth())) {
               return true;

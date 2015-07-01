@@ -91,8 +91,6 @@ Module.controller('MyCtrl', ['$scope', function ($scope) {
          * @returns javascript Date object
          */
         this.getDayAfterNumDays = function(date, numDays) {
-            console.log(date);
-            console.log(numDays);
             var newDay = new Date(date);
             newDay.setDate(newDay.getDate() + parseInt(numDays));
             return newDay;
@@ -106,6 +104,7 @@ Module.controller('MyCtrl', ['$scope', function ($scope) {
          * @return boolean
          */
         this.getStartCal = function() {
+            console.log($scope.startCal);
             return $scope.startCal;
         };
         
