@@ -25,7 +25,7 @@ module.exports = function(grunt) {
       },
       js: {
         // the files to concatenate
-        src: ['scripts/datePicker.js', 'scripts/datePickerUtils.js', 'scripts/dateRange.js', 'scripts/datePickerApp.js', 'scripts/input.js'],
+        src: ['scripts/datePicker.js', 'scripts/datePickerUtils.js', 'scripts/dateRange.js', 'scripts/dateInput.js', 'scripts/datePickerApp.js', 'scripts/input.js'],
         // the location of the resulting JS file
         dest: 'dist/<%= pkg.name %>.js'
       },
@@ -35,11 +35,17 @@ module.exports = function(grunt) {
         // the location of the resulting JS file
         dest: 'dist/<%= pkg.name %>.css'
       }
+    },
+    clean: {
+        main: {
+            src: 'dist/css'
+        }
     }
-  });
+   });
 
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
-  grunt.registerTask('default', ['less', 'concat']);
+  grunt.registerTask('default', ['less', 'concat', 'clean']);
 };

@@ -10,16 +10,10 @@
 //Build off of the datePicker module
 var Module = angular.module('datePicker');
 
-Module.controller('MyCtrl', ['$scope', function ($scope) {
-    $scope.formData = {};
-    $scope.formData.fromDate = null;
-    $scope.formData.toDate = null;
-
-}])
 /*
  * datePickerApp Directive
  */
-.directive('datePickerApp', function () {
+Module.directive('datePickerApp', function () {
   return {
     templateUrl: 'templates/datepickerapp.html',
     scope: {
@@ -28,7 +22,8 @@ Module.controller('MyCtrl', ['$scope', function ($scope) {
         selectedStartDate: '=fromDate',
         selectedEndDate: '=toDate',
         viewMode: '@',
-        onCalClick: '@'
+        onCalClick: '@',
+        dateFormat: '@'
     },
     //Define controller functions to be passed down to the datePicker directive
     controller: function($scope) {
@@ -109,7 +104,6 @@ Module.controller('MyCtrl', ['$scope', function ($scope) {
          * @return boolean
          */
         this.getStartCal = function() {
-            console.log($scope.startCal);
             return $scope.startCal;
         };
         
@@ -117,16 +111,18 @@ Module.controller('MyCtrl', ['$scope', function ($scope) {
          * getDefaultDate
          * 
          * Receives the id of the datePicker requesting the defaultDate and
-         * returns its respective default date
+         * returns its respective default date -- default is this and next month
          * 
          * @param int id
          * @returns javascript Date object
          */
         this.getDefaultDate = function(id) {
             var date = new Date();
+            //If we are looking at the first datepicker, choose this month
             if(id == 0) {
                 return date;
             }
+            //If we are looking at the second datepicker, choose next month
             return this.getNextMonth(date);
         };
         
@@ -148,12 +144,34 @@ Module.controller('MyCtrl', ['$scope', function ($scope) {
          
     },
     link: function (scope, element, attrs) {
-        //Initialize the start/end date inputs as empty containers
+        //These are the initial dates that appear in the calendar
         scope.selectedStartDate = null;
         scope.selectedEndDate = null;
         
+        //These are the initial dates that appear in the input boxes
+        scope.visualStartDate = null;
+        scope.visualEndDate = null;
+        
+        scope.dateFormat = (scope.dateFormat || "L");
+        
+        scope.$watch('visualStartDate', function(value) {
+            if(value != null) {
+                scope.selectedStartDate = moment(value, scope.dateFormat).format();
+                console.log(scope.selectedStartDate);
+                console.log(scope.dateFormat);
+            }
+        });
+        
+        scope.$watch('visualEndDate', function(value) {
+            if(value != null) {
+                scope.selectedEndDate = moment(value, scope.dateFormat).format();
+            }
+        }); 
+        
         /*
          * formatDateInput
+         * 
+         * The format that will appear to the user in the input boxes
          * 
          * @unused 
          * 
@@ -161,9 +179,27 @@ Module.controller('MyCtrl', ['$scope', function ($scope) {
          * @return string "mm/dd/yyyy"
          */
         function formatDateInput(date) {
-            var dateStr = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear();
-            return dateStr;
+            var date = moment(date);
+            return date.format(scope.dateFormat);
         }
+        
+        /*
+         * Mutator
+         * 
+         * Whenever the calendar is changed, we need to update our true value
+         * and the visual value displayed
+         * 
+         * @returns {undefined}
+         */
+        function setSelectedStartDate(date) {
+            scope.selectedStartDate = date;
+            scope.visualStartDate = formatDateInput(date);
+        }
+        function setSelectedEndDate(date) {
+            scope.selectedEndDate = date;
+            scope.visualEndDate = formatDateInput(date);
+        }
+        
         
         /*
          * Listener
@@ -176,10 +212,10 @@ Module.controller('MyCtrl', ['$scope', function ($scope) {
            //date = formatDateInput(date);
            switch(pickerId) {
                case 0: 
-                   scope.selectedStartDate = date;
+                   setSelectedStartDate(date);
                    break;
                case 1: 
-                   scope.selectedEndDate = date;
+                   setSelectedEndDate(date);
                    break;
            }
         });
