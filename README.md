@@ -1,24 +1,26 @@
 # datepicker-extension
 Extension of https://github.com/g00fy-/angular-datepicker
 
-##BUILD
+###BUILD
 
 ```
 grunt
 ```
 
-##RUN
+###RUN
 
 ```
 index.html
 ```
 
-##Directive
+###Directive
 ```
 <div date-picker-app on-cal-click="rotate" view-mode="doubleDate" max-start-date="330" data-from-date="formData.fromDate" data-to-date="formData.toDate"></div>
 ```
 
 ----------
+
+##Directive Attributes
 
 #### from-date
 Type: `Date`  
