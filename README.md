@@ -1,5 +1,13 @@
 # datepicker-extension
-Extension of `https://github.com/g00fy-/angular-datepicker`
+Extension of (https://github.com/g00fy-/angular-datepicker)
+
+##Requirements
+- Angular v1.3.13+
+- UI Bootstrap v0.13.0+
+- Moment JS v2.10.3+
+
+- Font Awesome
+- Bootstrap v3.3.5+
 
 ##Getting Started
 
@@ -15,7 +23,7 @@ grunt
 index.html
 ```
 
-###Directive
+###Directive Example
 ```
 <div date-picker-app view-mode="doubleDate"></div>
 ```
