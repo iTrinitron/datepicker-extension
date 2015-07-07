@@ -18,7 +18,14 @@
     <div class="span6">
       <h2>Calendar</h2>
       <!-- MMM DD YYYY -->
-      <div date-picker-app date-format="MMM DD YYYY" view-mode="doubleDate" max-start-date="330" data-from-date="formData.fromDate" data-to-date="formData.toDate"></div>  
+      <div date-picker-app 
+           date-output-format="MMM DD YYYY" 
+           start-placeholder-text="MMM DD YYYY" 
+           end-placeholder-text="MMM DD YYYY" 
+           view-mode="doubleDate"
+           data-from-date="formData.fromDate" 
+           data-to-date="formData.toDate">
+      </div>  
     </span>
     </div>
   </div>

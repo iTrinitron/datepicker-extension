@@ -166,6 +166,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
           case 'date':
             //Let the dateRange know that it has been changed
             scope.$emit('dateChange', new Date(date));
+            update(); //This is an expensive call 
             break;
           /*falls through*/
           case 'month':
@@ -295,35 +296,48 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         return datePickerUtils.isSameMinutes(scope.model, date);
       };
       
-      /*
-       * isDisabled
-       * 
-       * Checks to see if a given day is within the valid dates
-       * -the day is on or after today's date
-       * -the day is within the given month it appears in
-       * 
-       * @param javascript Date object day
-       * @param javascript Date object date
-       * @return boolean
-       * 
-       * @author Michael C
-       */
-      scope.isDisabled = function(day, date) {
-          //If the day is past the max-start-date
-          if(day > datePickerApp.maxStartDate) {
-              return true;
-          }
-          //If the day is past the start date
-          //console.log(datePickerApp);
-          
-          if((day.getMonth() != date.getMonth())) {
-              return true;
-          }
-          if(day < new Date()) {
-              return true;
-          }
-          return false;
-      };
+    /*
+     * isDisabled
+     * 
+     * Checks to see if a given day is within the valid dates
+     * -the day is on or after today's date
+     * -the day is within the given month it appears in
+     * 
+     * @param javascript Date object day
+     * @param javascript Date object date
+     * @return boolean
+     * 
+     * @author Michael C
+     */
+    scope.isDisabled = function(day, date) {
+        if(datePickerApp.getStartCal()) {
+            var minDate = datePickerApp.minStartDate;
+            var maxDate = datePickerApp.maxStartDate;
+        }
+        else {
+            var minDate = datePickerApp.minEndDate;
+            var maxDate = datePickerApp.maxEndDate;
+        }
+
+        //If the day is past the max-start-date
+        if(day > maxDate) {
+          return true;
+        }
+        //If the day is before the min-start-date
+        else if(day < minDate) {
+          return true;
+        }
+        //If the day is past the start date
+        //console.log(datePickerApp);
+
+        if((day.getMonth() != date.getMonth())) {
+          return true;
+        }
+        if(day < new Date()) {
+          return true;
+        }
+        return false;
+    };
 
       scope.isNow = function (date) {
         var is = true;
