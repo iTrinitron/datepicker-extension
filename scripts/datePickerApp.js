@@ -33,6 +33,7 @@ Module.directive('datePickerApp', function () {
         $scope.isOpen = false; //variable controls whether or not the dateRange is visible
         //Control what view mode we default to
         $scope.viewMode = ($scope.viewMode || "doubleDate")
+        $scope.isFocused = false;
         
         /*
          * updateDateRange
@@ -94,9 +95,45 @@ Module.directive('datePickerApp', function () {
         //Pass the variable down
         this.maxStartDate = this.getDayAfterNumDays(new Date(), $scope.maxStartDate);
         
+        /*
+         * updateDate -- called on ng-blur
+         * 
+         * Updates the calendar's start/end date based on the input's start/end
+         * date when the user leaves the input box
+         * 
+         * @param string value
+         */
+        $scope.updateDate = function(value) {
+            //Toggle our focus
+            $scope.setFocus(false);
+            
+            //Update the calendar date
+            if(value === "start") {
+                $scope.selectedStartDate = new Date(moment($scope.visualStartDate, $scope.dateFormat).format());
+            }
+            else {
+                $scope.selectedEndDate = new Date(moment($scope.visualEndDate, $scope.dateFormat).format());
+            }
+        };
+        
+        /*
+         * Mutator for the isFocused flag
+         * 
+         * @param string value
+         */
+        $scope.setFocus = function(value) {
+            $scope.isFocused = value;
+        };
+        
+        /*
+         * Mutator for the startCal flag
+         * 
+         * @param boolean value
+         */
         $scope.setStartCal = function(value) {
             $scope.startCal = value;
         };
+        
         
         /*
          * Accessor for the startCal flag
@@ -154,18 +191,57 @@ Module.directive('datePickerApp', function () {
         //Default to the "L" format
         scope.dateFormat = (scope.dateFormat || "L");
         
+        /*
+         * Validates a date object
+         * 
+         * @param javascript Date object d
+         * @returns boolean
+         */
+        function isDate(d) {
+            if ( Object.prototype.toString.call(d) === "[object Date]" ) {
+                // it is a date
+                if ( isNaN( d.getTime() ) ) {  // d.valueOf() could also work
+                  // date is not valid
+                }
+                else {
+                  return true;
+                }
+            }
+            
+            return false;
+        }
         
+        /*
+         * scope.$watch
+         * 
+         * Updates the calendar everytime a new input start/end date is entered
+         */
         scope.$watch('visualStartDate', function(value) {
-            if(value != null) {
-                scope.selectedStartDate = new Date(moment(value, scope.dateFormat).format());
-            }
+            updateDateProt("start", value);
         });
-        
         scope.$watch('visualEndDate', function(value) {
-            if(value != null) {
-                scope.selectedEndDate = new Date(moment(value, scope.dateFormat).format());
-            }
+            updateDateProt("end", value);
         }); 
+        
+        /*
+         * 
+         * @param {type} calType
+         * @param {type} value
+         * @returns {undefined}
+         */
+        function updateDateProt(calType, value) {
+            if(value != null) {
+                var date = new Date(moment(value, scope.dateFormat).format());
+                if(isDate(date)) {
+                    if(calType === "start") {
+                        scope.selectedStartDate = new Date(moment(value, scope.dateFormat).format());
+                    }
+                    else {
+                        scope.selectedEndDate = new Date(moment(value, scope.dateFormat).format());
+                    }
+                }
+            }
+        }
         
         /*
          * formatDateInput
@@ -180,23 +256,6 @@ Module.directive('datePickerApp', function () {
         function formatDateInput(date) {
             var date = moment(date);
             return date.format(scope.dateFormat);
-        }
-        
-        /*
-         * Mutator
-         * 
-         * Whenever the calendar is changed, we need to update our true value
-         * and the visual value displayed
-         * 
-         * @returns {undefined}
-         */
-        function setSelectedStartDate(date) {
-            scope.selectedStartDate = date;
-            scope.visualStartDate = formatDateInput(date);
-        }
-        function setSelectedEndDate(date) {
-            scope.selectedEndDate = date;
-            scope.visualEndDate = formatDateInput(date);
         }
         
         /*
@@ -219,6 +278,27 @@ Module.directive('datePickerApp', function () {
                 setSelectedEndDate(date);
             }
         });
+        
+        /*
+         * Mutator
+         * 
+         * Whenever the calendar is changed, we need to update our true value
+         * and the visual value displayed
+         * 
+         * @returns {undefined}
+         */
+        function setSelectedStartDate(date) {
+            scope.selectedStartDate = date;
+            if(scope.isFocused == false) {
+                scope.visualStartDate = formatDateInput(date);
+            }
+        }
+        function setSelectedEndDate(date) {
+            scope.selectedEndDate = date;
+            if(scope.isFocused == false) {
+                scope.visualEndDate = formatDateInput(date);
+            }
+        }
         
         
         /*
