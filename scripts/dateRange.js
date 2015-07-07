@@ -80,20 +80,11 @@ Module.directive('dateRange', function () {
             function processChange(value) {
                 //If we are working with the start input
                 if(cntrl.getStartCal()) {
-                    //Update the new start value
                     scope.start = value; 
-                    //If the end date is not set or the new start is past the end
-                    if(scope.end == null || value > scope.end.getTime()) {
-                        scope.end = getNextDay(value);
-                    }
                 }
                 //If we are working with the end input
                 else {
                     scope.end = value;
-                    //If the start date is not set or the new end is before the start
-                    if(scope.start == null || value < scope.start.getTime()) {
-                        scope.start = new Date();
-                    }
                 }
                 //Autoclose after selection
                 cntrl.updateDateRange();
