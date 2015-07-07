@@ -65,6 +65,30 @@ Default: ``
 
 Placeholder text to place in the end input box
 
+#### min-start-date
+Type: `Date`  
+Default: ``
+
+Minimum start date
+
+#### max-start-date
+Type: `Date`   
+Default: ``
+
+Maximum start Date
+
+#### min-end-date
+Type: `Date`  
+Default: ``
+
+Minimum end date
+
+#### max-end-date
+Type: `Date`  
+Default: ``
+
+Maximum end Date
+
 -------------
 
 Further optimization
