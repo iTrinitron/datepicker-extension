@@ -17,7 +17,7 @@ index.html
 
 ###Directive
 ```
-<div date-picker-app on-cal-click="rotate" view-mode="doubleDate" max-start-date="330" data-from-date="formData.fromDate" data-to-date="formData.toDate"></div>
+<div date-picker-app view-mode="doubleDate"></div>
 ```
 
 ----------
