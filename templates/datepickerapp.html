@@ -34,7 +34,7 @@
     <!-- Calendar Dropdown -->
     <div class="dropdown-menu"  >
         <!-- Triangle Polygon -->
-        <div class="tri-up" ng-class="{'triangle-left':startCal, 'triangle-right':!startCal}"></div>
+        <div class="tri-up" ng-class="{'triangle-left':startCal, 'triangle-right':!startCal, 'triangle-single-right':isSingle}"></div>
         <!-- dateRange Directive -->
         
         <div date-range start="selectedStartDate" end="selectedEndDate"></div>
