@@ -51,8 +51,8 @@ Default: `MMM DD YYYY`
 Type: `String`  
 Default: `doubleDate`
 
-`"singleDate": one single dateRange input`
-`"doubleDate": two single date inputs`
+```"singleDate": one single dateRange input```
+```"doubleDate": two single date inputs```
 
 Choose between a single dateRange view or two single date inputs
 
