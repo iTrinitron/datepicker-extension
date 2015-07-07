@@ -1,5 +1,7 @@
 # datepicker-extension
-Extension of https://github.com/g00fy-/angular-datepicker
+Extension of `https://github.com/g00fy-/angular-datepicker`
+
+##Getting Started
 
 ###BUILD
 
