@@ -42,6 +42,17 @@ Default: `doubleDate`
 
 Choose between a single dateRange view or two single date inputs
 
+#### start-placeholder-text
+Type: `String`  
+Default: ``
+
+Placeholder text to place in the start input box
+
+#### end-placeholder-text
+Type: `String`  
+Default: ``
+
+Placeholder text to place in the end input box
 
 -------------
 

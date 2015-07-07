@@ -17,7 +17,6 @@ Module.directive('datePickerApp', function () {
   return {
     templateUrl: 'templates/datepickerapp.html',
     scope: {
-        startMonth: '=',
         //maxStartDateOffset: '@',
         selectedStartDate: '=fromDate',
         selectedEndDate: '=toDate',
