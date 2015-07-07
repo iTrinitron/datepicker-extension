@@ -1,5 +1,5 @@
 # datepicker-extension
-Extension of (https://github.com/g00fy-/angular-datepicker)
+Extension of [g00fy's Angular Datepicker](https://github.com/g00fy-/angular-datepicker)
 
 ##Requirements
 - Angular v1.3.13+
