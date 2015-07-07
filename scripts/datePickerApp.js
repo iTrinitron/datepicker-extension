@@ -22,7 +22,6 @@ Module.directive('datePickerApp', function () {
         selectedStartDate: '=fromDate',
         selectedEndDate: '=toDate',
         viewMode: '@',
-        onCalClick: '@',
         dateFormat: '@'
     },
     //Define controller functions to be passed down to the datePicker directive
@@ -32,8 +31,8 @@ Module.directive('datePickerApp', function () {
         //Flag to check whether we are picking the start or end date
         $scope.startCal = null;
         $scope.isOpen = false; //variable controls whether or not the dateRange is visible
-        
-        this.onCalClick = ($scope.onCalClick || "close");
+        //Control what view mode we default to
+        $scope.viewMode = ($scope.viewMode || "doubleDate")
         
         /*
          * updateDateRange
@@ -43,11 +42,11 @@ Module.directive('datePickerApp', function () {
          */
         this.updateDateRange = function() {
             //Close the calendar
-            if(this.onCalClick === "close") {
+            if($scope.viewMode == "doubleDate") {
                 this.closeDateRange(); 
             }
             //Rotate from start --> end --> close
-            else if(this.onCalClick === "rotate") {
+            else if($scope.viewMode == "singleDate") {
                 $scope.startCal ? this.toggleStartCal() : this.closeDateRange();
             }
             else {
@@ -152,19 +151,19 @@ Module.directive('datePickerApp', function () {
         scope.visualStartDate = null;
         scope.visualEndDate = null;
         
+        //Default to the "L" format
         scope.dateFormat = (scope.dateFormat || "L");
+        
         
         scope.$watch('visualStartDate', function(value) {
             if(value != null) {
-                scope.selectedStartDate = moment(value, scope.dateFormat).format();
-                console.log(scope.selectedStartDate);
-                console.log(scope.dateFormat);
+                scope.selectedStartDate = new Date(moment(value, scope.dateFormat).format());
             }
         });
         
         scope.$watch('visualEndDate', function(value) {
             if(value != null) {
-                scope.selectedEndDate = moment(value, scope.dateFormat).format();
+                scope.selectedEndDate = new Date(moment(value, scope.dateFormat).format());
             }
         }); 
         
@@ -199,6 +198,27 @@ Module.directive('datePickerApp', function () {
             scope.selectedEndDate = date;
             scope.visualEndDate = formatDateInput(date);
         }
+        
+        /*
+         * scope.$watch
+         * 
+         * Updates the inputs everytime a new date is selected on the calendar
+         * 
+         * @param date string
+         * 
+         * @author Michael C
+         */
+        scope.$watch('selectedStartDate', function(date) {
+            if(date != null) {
+                setSelectedStartDate(date);
+            }
+        });
+        
+        scope.$watch('selectedEndDate', function(date) {
+            if(date != null) {
+                setSelectedEndDate(date);
+            }
+        });
         
         
         /*

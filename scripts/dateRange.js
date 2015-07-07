@@ -99,30 +99,6 @@ Module.directive('dateRange', function () {
                 cntrl.updateDateRange();
             }
             
-            /*
-             * scope.$watch
-             * 
-             * Updates the inputs everytime a new date is selected on the calendar
-             * 
-             * @param date string
-             * 
-             * @author Michael C
-             */
-            scope.$watch('start.getTime()', function (value) {
-                //Make sure that we are not capturing its initialization 
-                if(value != null) {
-                    value = new Date(value);
-                    scope.$emit('dateChange2', 0, value);
-                }
-            });
-            scope.$watch('end.getTime()', function (value) {
-                //Make sure that we are not capturing its initialization 
-                if(value != null) {
-                    value = new Date(value);
-                    scope.$emit('dateChange2', 1, value);
-                }
-            });
-            
             attrs.$observe('disabled', function(isDisabled){
                 scope.disableDatePickers = !!isDisabled;
             });

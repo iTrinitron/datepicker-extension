@@ -17,9 +17,7 @@
   <div class="row-fluid">
     <div class="span6">
       <h2>Calendar</h2>
-      {{formData}}
-      <!-- MMM DD YYYY -->
-      <div date-picker-app date-format="MMM DD YYYY" view-mode="doubleDate" max-start-date="330" data-from-date="formData.fromDate" data-to-date="formData.toDate"></div>  
+        <div date-picker-app date-format="dddd" on-cal-click="rotate" view-mode="doubleDate" max-start-date="330" data-from-date="formData.fromDate" data-to-date="formData.toDate"></div>  
     </span>
     </div>
   </div>
