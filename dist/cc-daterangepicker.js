@@ -736,6 +736,9 @@ Module.directive('datePickerApp', function () {
         $scope.debug = function() {
             console.log($scope.selectedStartDate);
             console.log($scope.selectedEndDate);
+            console.log($scope.visualStartDate);
+            console.log($scope.visualEndDate);
+            console.log("---------------------")
         };
         
         this.getSelectedStartDate = function() {
@@ -939,20 +942,20 @@ Module.directive('datePickerApp', function () {
          * 
          * @param string value
          */
-        scope.updateDate = function(value) { 
-            //Update the calendar date
-            if(value === "start") {
-                scope.setFocus(value, false);
-                //Make sure it isn't null -- so we don't automatically present a default date
-                if(scope.visualStartDate != null) {
-                    //Toggle our focus
-                    scope.selectedStartDate = reverseDateInputFormat(scope.visualStartDate);
-                }
+        scope.updateDate = function(calType) { 
+            var selectedDate = function(x) { scope.selectedEndDate = x };
+            var date = scope.visualEndDate;
+            if(calType === "start") {
+                //Hack to pass by reference?
+                selectedDate = function(x) { scope.selectedStartDate = x };
+                date = scope.visualStartDate;
             }
-            else {
-                scope.setFocus(value, false);
-                if(scope.visualEndDate != null) {
-                    scope.selectedEndDate = reverseDateInputFormat(scope.visualEndDate);
+
+            scope.setFocus(calType, false);
+            //Make sure it isn't null -- so we don't automatically present a default date
+            if(date != null) {
+                if(isDate(reverseDateInputFormat(date)) || date == "") {
+                    selectedDate(reverseDateInputFormat(date));
                 }
             }
         }; 
@@ -981,7 +984,8 @@ Module.directive('datePickerApp', function () {
          * @returns javascript Date object
          */
         function reverseDateInputFormat(date) {
-            var momentDate = moment(date, scope.dateOutputFormat);
+            //True designates strict parsing
+            var momentDate = moment(date, scope.dateOutputFormat, true);
             return new Date(momentDate.format());
         }
         
@@ -999,7 +1003,6 @@ Module.directive('datePickerApp', function () {
                 setSelectedStartDate(date);
             }
         });
-        
         scope.$watch('selectedEndDate', function(date) {
             if(date != null) {
                 setSelectedEndDate(date);
@@ -1024,10 +1027,10 @@ Module.directive('datePickerApp', function () {
                     scope.visualStartDate = "";
                 }
             }
-            //If the end date is not set or the new start is past the end
-            if(scope.selectedEndDate == null || scope.selectedStartDate > scope.selectedEndDate || !isDate(scope.selectedEndDate)) {
-                setSelectedEndDate(scope.getNextDay(date));
-            } 
+            //If the new start is past the end
+            if(scope.selectedEndDate != "" && (scope.selectedStartDate > scope.selectedEndDate || !isDate(scope.selectedEndDate))) {
+                setSelectedEndDate("");
+            }
         }
         function setSelectedEndDate(date) {
             scope.selectedEndDate = date;
@@ -1040,8 +1043,8 @@ Module.directive('datePickerApp', function () {
                 }
             }
             //If the start date is not set or the new end is before the start
-            if(scope.selectedEndDate == null ||  scope.selectedEndDate < scope.selectedStartDate || !isDate(scope.selectedStartDate)) {
-                setSelectedStartDate(new Date());
+            if(scope.selectedEndDate != "" &&  (scope.selectedEndDate < scope.selectedStartDate || !isDate(scope.selectedStartDate))) {
+                setSelectedStartDate("");
             }
         }
         
