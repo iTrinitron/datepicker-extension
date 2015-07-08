@@ -686,8 +686,8 @@ Module.directive('datePickerApp', function () {
         maxStartDate: '@',
         minEndDate: '@',
         maxEndDate: '@',
-        maxEndDateOffset: '@'
-        
+        maxEndDateOffset: '@',
+        maxStartDateOffset: '@'
     },
     //Define controller functions to be passed down to the datePicker directive
     controller: function($scope) {
@@ -719,6 +719,7 @@ Module.directive('datePickerApp', function () {
         this.maxEndDate = new Date($scope.maxEndDate).setHours(0, 0, 0, 0);
         
         this.maxEndDateOffset = ($scope.maxEndDateOffset || null);
+        
         var maxEndDates = new Array();
         
         this.getMaxEndDate = function() {
@@ -773,10 +774,6 @@ Module.directive('datePickerApp', function () {
         };
         this.closeDateRange = function() {
             $scope.isOpen = false;
-        };
-        
-        $scope.change = function() {
-            console.log("Idk");
         };
         
         /*
@@ -928,15 +925,8 @@ Module.directive('datePickerApp', function () {
          * 
          * Updates the calendar everytime a new input start/end date is entered
          */
-        scope.$watch('visualStartDate', function(value) {
-            updateDateProt("start", value);
-        });
-        scope.$watch('visualEndDate', function(value) {
-            updateDateProt("end", value);
-        }); 
-        
-        scope.change = function() {
-          console.log("change");  
+        scope.calChange = function(calType) {
+          scope.updateDate(calType);  
         };
         
         /*
@@ -966,26 +956,6 @@ Module.directive('datePickerApp', function () {
                 }
             }
         }; 
-        
-        /*
-         * 
-         * @param {type} calType
-         * @param {type} value
-         * @returns {undefined}
-         */
-        function updateDateProt(calType, value) {
-            if(value != null) {
-                var date = new Date(moment(value, scope.dateFormat).format());
-                if(isDate(date)) {
-                    if(calType === "start") {
-                        scope.selectedStartDate = reverseDateInputFormat(value);
-                    }
-                    else {
-                        scope.selectedEndDate = reverseDateInputFormat(value);
-                    }
-                }
-            }
-        }
         
         /*
          * formatDateInput

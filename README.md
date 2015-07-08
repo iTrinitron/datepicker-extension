@@ -103,13 +103,13 @@ Maximum end date relative to the chosen start date
 
 ####Further optimization
 
-1. Swap $watch on the input for an ng-change
+1. ~~Swap $watch on the input for an ng-change~~ (swapped out a few)
 2. Change startCal toggle on/off to not update (causing an entire calendar wipe and rebuild), and instead add/remove the disabled class
 
 ####Todo
 
 1. Apply validation to the input boxes
 2. Comment new functions
-~~3. Add offset min/max dates~~
-~~4. Fix up-arrow for single input box~~
+3. ~~Add offset min/max dates~~
+4. ~~Fix up-arrow for single input box~~
 5. Apply validation to the directive attributes
