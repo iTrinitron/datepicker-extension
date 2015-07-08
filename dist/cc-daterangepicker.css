@@ -495,7 +495,8 @@
 }
 [date-range] [date-picker] .active.after.before,
 [date-range] [date-picker] .after.before,
-[date-range] [date-picker] .active.after {
+[date-range] [date-picker] .active.after,
+[date-range] [date-picker] .active.active {
   color: #FFF;
   background-color: #00c0cd;
   background-image: none;
@@ -572,6 +573,9 @@
 }
 [date-picker-app] .triangle-right {
   left: 250px;
+}
+[date-picker-app] .triangle-single-right {
+  left: 150px !important;
 }
 [date-picker-app] .tri-up:before,
 [date-picker-app] .tri-up:after {

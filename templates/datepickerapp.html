@@ -7,7 +7,7 @@
             <div style="width:200px;display:inline-block;margin-right:30px;">
                 <div class="input-group">
                     <span  class="input-group-addon fa fa-calendar" ng-click="setStartCal(true);openDateRange()"></span>
-                    <input class="dropdown-toggle form-control unstyled" placeholder="{{startPlaceholderText}}" type="text" ng-focus="setFocus('start', true)" ng-blur="updateDate('start')" ng-click="setStartCal(true);openDateRange()"  ng-model='$parent.visualStartDate'>
+                    <input class="dropdown-toggle form-control unstyled" ng-change="change()" placeholder="{{startPlaceholderText}}" type="text" ng-focus="setFocus('start', true)" ng-blur="updateDate('start')" ng-click="setStartCal(true);openDateRange()"  ng-model='$parent.visualStartDate'>
                 </div>
             </div>
             <!-- End Date Input -->
@@ -31,10 +31,13 @@
         </div>
     </div>
     
+    <div ng-click="debug()">debug</div>
+    
     <!-- Calendar Dropdown -->
-    <div class="dropdown-menu"  >
+    <!-- preventDefault and stopPropagation block calendar clicks from autoclosing the app -->
+    <div class="dropdown-menu" ng-click="$event.preventDefault();$event.stopPropagation();">
         <!-- Triangle Polygon -->
-        <div class="tri-up" ng-class="{'triangle-left':startCal, 'triangle-right':!startCal, 'triangle-single-right':isSingle}"></div>
+        <div class="tri-up" ng-class="{'triangle-left':startCal, 'triangle-right':!startCal, 'triangle-single-right':(isSingle && !startCal)}"></div>
         <!-- dateRange Directive -->
         
         <div date-range start="selectedStartDate" end="selectedEndDate"></div>

@@ -167,6 +167,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
             //Let the dateRange know that it has been changed
             scope.$emit('dateChange', new Date(date));
             update(); //This is an expensive call 
+            
             break;
           /*falls through*/
           case 'month':
@@ -199,10 +200,12 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       function update() {
         var view = scope.view;
 
+        /*
+         * this had to be commented out because it caused weird month bugs
         if (scope.model && !arrowClick) {
           scope.date = new Date(scope.model);
           arrowClick = false;
-        }
+        } */
         var date = scope.date;
 
         switch (view) {
@@ -285,7 +288,9 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       };
 
       scope.isSameDay = function (date) {
-        return datePickerUtils.isSameDay(scope.model, date);
+        return (datePickerUtils.isSameDay(datePickerApp.getSelectedStartDate(), date) || datePickerUtils.isSameDay(datePickerApp.getSelectedEndDate(), date));
+      
+        //return datePickerUtils.isSameDay(scope.model, date);
       };
 
       scope.isSameHour = function (date) {
@@ -317,8 +322,16 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         else {
             var minDate = datePickerApp.minEndDate;
             var maxDate = datePickerApp.maxEndDate;
+            //If the day is past the max end date offset
+            if(datePickerApp.maxEndDateOffset != null) {
+                if(datePickerApp.getMaxEndDate() != null) {
+                    if(day > datePickerApp.getMaxEndDate()) {
+                        return true;
+                    }
+                }
+            }
         }
-
+        
         //If the day is past the max-start-date
         if(day > maxDate) {
           return true;
@@ -327,15 +340,12 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         else if(day < minDate) {
           return true;
         }
-        //If the day is past the start date
-        //console.log(datePickerApp);
+        
 
         if((day.getMonth() != date.getMonth())) {
           return true;
         }
-        if(day < new Date()) {
-          return true;
-        }
+
         return false;
     };
 

@@ -167,6 +167,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
             //Let the dateRange know that it has been changed
             scope.$emit('dateChange', new Date(date));
             update(); //This is an expensive call 
+            
             break;
           /*falls through*/
           case 'month':
@@ -199,10 +200,12 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       function update() {
         var view = scope.view;
 
+        /*
+         * this had to be commented out because it caused weird month bugs
         if (scope.model && !arrowClick) {
           scope.date = new Date(scope.model);
           arrowClick = false;
-        }
+        } */
         var date = scope.date;
 
         switch (view) {
@@ -285,7 +288,9 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       };
 
       scope.isSameDay = function (date) {
-        return datePickerUtils.isSameDay(scope.model, date);
+        return (datePickerUtils.isSameDay(datePickerApp.getSelectedStartDate(), date) || datePickerUtils.isSameDay(datePickerApp.getSelectedEndDate(), date));
+      
+        //return datePickerUtils.isSameDay(scope.model, date);
       };
 
       scope.isSameHour = function (date) {
@@ -317,8 +322,16 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         else {
             var minDate = datePickerApp.minEndDate;
             var maxDate = datePickerApp.maxEndDate;
+            //If the day is past the max end date offset
+            if(datePickerApp.maxEndDateOffset != null) {
+                if(datePickerApp.getMaxEndDate() != null) {
+                    if(day > datePickerApp.getMaxEndDate()) {
+                        return true;
+                    }
+                }
+            }
         }
-
+        
         //If the day is past the max-start-date
         if(day > maxDate) {
           return true;
@@ -327,15 +340,12 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         else if(day < minDate) {
           return true;
         }
-        //If the day is past the start date
-        //console.log(datePickerApp);
+        
 
         if((day.getMonth() != date.getMonth())) {
           return true;
         }
-        if(day < new Date()) {
-          return true;
-        }
+
         return false;
     };
 
@@ -675,7 +685,8 @@ Module.directive('datePickerApp', function () {
         minStartDate: '@',
         maxStartDate: '@',
         minEndDate: '@',
-        maxEndDate: '@'
+        maxEndDate: '@',
+        maxEndDateOffset: '@'
         
     },
     //Define controller functions to be passed down to the datePicker directive
@@ -692,7 +703,8 @@ Module.directive('datePickerApp', function () {
         //Controls whether or not the dateRange is visible
         $scope.isOpen = false; 
         //Control what view mode we default to
-        $scope.viewMode = ($scope.viewMode || "doubleDate")
+        $scope.viewMode = ($scope.viewMode || "doubleDate");
+        ($scope.viewMode == "singleDate") ? $scope.isSingle = true : $scope.isSingle = false;
         //Let us know whether or not an input is in focus
         $scope.startIsFocused = false;
         $scope.endIsFocused = false;
@@ -701,10 +713,36 @@ Module.directive('datePickerApp', function () {
         $scope.startPlaceholderText = ($scope.startPlaceholderText || "");
         $scope.endPlaceholderText = ($scope.endPlaceholderText || "");
         
-        this.minStartDate = (new Date($scope.minStartDate) || null);
-        this.maxStartDate = (new Date($scope.maxStartDate) || null);
-        this.minEndDate = (new Date($scope.minEndDate) || null);
-        this.maxEndDate = (new Date($scope.maxEndDate) || null);
+        this.minStartDate = new Date($scope.minStartDate || new Date()).setHours(0, 0, 0, 0);
+        this.maxStartDate = new Date($scope.maxStartDate).setHours(0, 0, 0, 0);
+        this.minEndDate = new Date($scope.minEndDate || new Date()).setHours(0, 0, 0, 0);
+        this.maxEndDate = new Date($scope.maxEndDate).setHours(0, 0, 0, 0);
+        
+        this.maxEndDateOffset = ($scope.maxEndDateOffset || null);
+        var maxEndDates = new Array();
+        
+        this.getMaxEndDate = function() {
+            if($scope.selectedStartDate != null) {
+                var date = $scope.selectedStartDate;
+                if(maxEndDates[date] == null) {
+                    maxEndDates[date] = getDayAfterNumDays(date, this.maxEndDateOffset);
+                }
+                return maxEndDates[date];
+            }
+            return null;
+        };
+        
+        $scope.debug = function() {
+            console.log($scope.selectedStartDate);
+            console.log($scope.selectedEndDate);
+        };
+        
+        this.getSelectedStartDate = function() {
+            return $scope.selectedStartDate;
+        };
+        this.getSelectedEndDate = function() {
+            return $scope.selectedEndDate;
+        };
         
         /*
          * updateDateRange
@@ -735,6 +773,10 @@ Module.directive('datePickerApp', function () {
         };
         this.closeDateRange = function() {
             $scope.isOpen = false;
+        };
+        
+        $scope.change = function() {
+            console.log("Idk");
         };
         
         /*
@@ -893,26 +935,37 @@ Module.directive('datePickerApp', function () {
             updateDateProt("end", value);
         }); 
         
+        scope.change = function() {
+          console.log("change");  
+        };
+        
         /*
          * updateDate -- called on ng-blur
          * 
          * Updates the calendar's start/end date based on the input's start/end
          * date when the user leaves the input box
          * 
+         * This makes the input boxes default if there is invalid input
+         * 
          * @param string value
          */
-        scope.updateDate = function(value) {
+        scope.updateDate = function(value) { 
             //Update the calendar date
             if(value === "start") {
-                //Toggle our focus
                 scope.setFocus(value, false);
-                scope.selectedStartDate = reverseDateInputFormat(scope.visualStartDate);
+                //Make sure it isn't null -- so we don't automatically present a default date
+                if(scope.visualStartDate != null) {
+                    //Toggle our focus
+                    scope.selectedStartDate = reverseDateInputFormat(scope.visualStartDate);
+                }
             }
             else {
                 scope.setFocus(value, false);
-                scope.selectedEndDate = reverseDateInputFormat(scope.visualEndDate);
+                if(scope.visualEndDate != null) {
+                    scope.selectedEndDate = reverseDateInputFormat(scope.visualEndDate);
+                }
             }
-        };
+        }; 
         
         /*
          * 
@@ -958,7 +1011,6 @@ Module.directive('datePickerApp', function () {
          * @returns javascript Date object
          */
         function reverseDateInputFormat(date) {
-            //console.log(scope.dateLegalFormats);
             var momentDate = moment(date, scope.dateOutputFormat);
             return new Date(momentDate.format());
         }

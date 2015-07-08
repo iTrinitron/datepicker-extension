@@ -1,0 +1,27 @@
+Double Date
+Single Date
+
+
+Double Date
+1. Initialize 
+
+No default date
+Placeholder text is visible
+Calendar button + input box
+
+2. Click Start/End Input
+
+Calendar appears
+Arrow points to the respective input
+Dates before min-date are blurred out
+Dates after max-date are blurred out
+
+If the new start is less than end - 30 days (breaks the 30-day range requirement):
+
+If the new start is greater than end:
+
+If the new end is less than start:
+
+If a new start is selected, and there is no end:
+
+If a new end is selected, and there is no start:

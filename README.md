@@ -51,8 +51,8 @@ Default: `MMM DD YYYY`
 Type: `String`  
 Default: `doubleDate`
 ```
-"singleDate": one single dateRange input
-"doubleDate": two single date inputs
+"singleDate" : one single dateRange input
+"doubleDate" : two single date inputs
 ```
 
 Choose between a single dateRange view or two single date inputs
@@ -93,6 +93,12 @@ Default: ``
 
 Maximum end Date
 
+#### max-end-date-offset
+Type: `Integer`  
+Default: ``
+
+Maximum end date relative to the chosen start date
+
 -------------
 
 ####Further optimization
@@ -104,5 +110,6 @@ Maximum end Date
 
 1. Apply validation to the input boxes
 2. Comment new functions
-3. Add offset min/max dates
-4. Fix up-arrow for single input box
+~~3. Add offset min/max dates~~
+~~4. Fix up-arrow for single input box~~
+5. Apply validation to the directive attributes
