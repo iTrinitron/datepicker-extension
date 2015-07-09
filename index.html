@@ -15,15 +15,16 @@
 </head>
 <body ng-app="sample">
   <div class="row-fluid">
-    <div class="span6">
+    <div class="span6" ng-controller="cntrler">
       <h2>Calendar</h2>
+      {{formData}}
       <!-- MMM DD YYYY -->
       <div date-picker-app 
            date-output-format="MMM DD YYYY" 
            start-placeholder-text="MMM DD YYYY" 
            end-placeholder-text="MMM DD YYYY"
            max-end-date-offset="30"
-           view-mode="doubleDate"
+           view-mode="singleDate"
            data-from-date="formData.fromDate" 
            data-to-date="formData.toDate">
       </div>  
@@ -36,7 +37,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
   <script src="dist/cc-daterangepicker.js"></script>
   <script>
-    angular.module('sample', ['datePicker', 'ui.bootstrap']);
+    angular.module('sample', ['datePicker', 'ui.bootstrap'])
+            .controller('cntrler',['$http','$scope','$timeout','$window', function($http,$scope,$timeout,$window) {
+                    function setupp() {
+                        console.log("setup");
+                        $scope.formData = {"rooms":[{"adults":[{"age":null,"name":null},{"age":null,"name":null}],"children":[],"childrenCount":"0","$$hashKey":"object:520"}],"toDestination":"316","fromDate":"2015-07-26T07:00:00.000Z","toDate":"2015-07-09T07:00:00.000Z"};
+            
+                    }
+                    
+                    setTimeout(function() { console.log("setupp"); setupp(); }, 1000);
+        }]);
   </script>
 </body>
 </html>

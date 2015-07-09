@@ -6,11 +6,6 @@
  * @modified Michael Chin
  */
 
-'use strict';
-
-//Build off of the datePicker module
-var Module = angular.module('datePicker');
-
 /*
  * dateRange Directive
  */

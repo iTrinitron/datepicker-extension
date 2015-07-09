@@ -4,40 +4,39 @@
         <!-- Double Daterange Input -->
         <div ng-switch-when="doubleDate">
             <!-- Start Date Input -->
-            <div style="width:200px;display:inline-block;margin-right:30px;">
-                <div class="input-group">
-                    <span  class="input-group-addon fa fa-calendar" ng-click="setStartCal(true);openDateRange()"></span>
-                    <input class="dropdown-toggle form-control unstyled" ng-change="calChange('start')" placeholder="{{startPlaceholderText}}" type="text" ng-focus="setFocus('start', true)" ng-blur="updateDate('start')" ng-click="setStartCal(true);openDateRange()"  ng-model='$parent.visualStartDate'>
+            <div style="display:table;width:100%;">
+                <div style="display:table-cell;width:50%;" >
+                    <div class="input-group">
+                        <span  class="input-group-addon icon-calendar" ng-click="setStartCal(true);openDateRange()"></span>
+                        <input class="dropdown-toggle form-control unstyled" ng-change="calChange('start')" placeholder="{{startPlaceholderText}}" type="text" ng-focus="setFocus('start', true)" ng-blur="updateDate('start')" ng-click="setStartCal(true);openDateRange()"  ng-model='$parent.visualStartDate'>
+                    </div>
                 </div>
-            </div>
-            <!-- End Date Input -->
-            <div style="width:200px;display:inline-block;margin-right:30px;">
-                <div class="input-group">
-                    <span  class="input-group-addon fa fa-calendar" ng-click="openDateRange();setStartCal(false);"></span>
-                    <input class="dropdown-toggle form-control unstyled" ng-change="calChange('end')" placeholder="{{endPlaceholderText}}" type="text" ng-focus="setFocus('false', true)" ng-blur="updateDate('end')" ng-click="setStartCal(false);openDateRange()"  ng-model='$parent.visualEndDate'>
+                <!-- End Date Input -->
+                <div style="display:table-cell;width:50%;">
+                    <div class="input-group">
+                        <span  class="input-group-addon icon-calendar" ng-click="openDateRange();setStartCal(false);"></span>
+                        <input class="dropdown-toggle form-control unstyled" ng-change="calChange('end')" placeholder="{{endPlaceholderText}}" type="text" ng-focus="setFocus('false', true)" ng-blur="updateDate('end')" ng-click="setStartCal(false);openDateRange()"  ng-model='$parent.visualEndDate'>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Single Daterange Input -->
         <div ng-switch-when="singleDate">
-            <div class="form-group" style="width:300px;">
-                <div class="input-group">
-                    <span  class="input-group-addon fa fa-calendar" ng-click="setStartCal(true);openDateRange()"></span>
-                    <input class="dropdown-toggle form-control unstyled inline single left" ng-change="calChange('start')" placeholder="{{startPlaceholderText}}" type="text" ng-focus="setFocus('start', true)" ng-blur="updateDate('start')" ng-click="setStartCal(true); openDateRange()"  ng-model='$parent.visualStartDate'>
-                    <input class="dropdown-toggle form-control unstyled inline single right" ng-change="calChange('end')" placeholder="{{endPlaceholderText}}" type="text" ng-focus="setFocus('false', true)" ng-blur="updateDate('end')" ng-click="setStartCal(true); openDateRange()"  ng-model='$parent.visualEndDate'>
-                </div>
+            <!-- Single Daterange Input -->
+            <div class="input-group">
+                <span  class="input-group-addon icon-calendar" ng-click="setStartCal(true);openDateRange()"></span>
+                <input class="dropdown-toggle form-control unstyled inline single left" ng-change="calChange('start')" placeholder="{{startPlaceholderText}}" type="text" ng-focus="setFocus('start', true)" ng-blur="updateDate('start')" ng-click="setStartCal(true); openDateRange()"  ng-model='$parent.visualStartDate'>
+                <input class="dropdown-toggle form-control unstyled inline single right" ng-change="calChange('end')" placeholder="{{endPlaceholderText}}" type="text" ng-focus="setFocus('false', true)" ng-blur="updateDate('end')" ng-click="setStartCal(false); openDateRange()"  ng-model='$parent.visualEndDate'>
             </div>
         </div>
     </div>
-    
+
     <!-- Calendar Dropdown -->
     <!-- preventDefault and stopPropagation block calendar clicks from autoclosing the app -->
     <div class="dropdown-menu" ng-click="$event.preventDefault();$event.stopPropagation();">
         <!-- Triangle Polygon -->
         <div class="tri-up" ng-class="{'triangle-left':startCal, 'triangle-right':!startCal, 'triangle-single-right':(isSingle && !startCal)}"></div>
         <!-- dateRange Directive -->
-        
+
         <div date-range start="selectedStartDate" end="selectedEndDate"></div>
     </div>
 </div>

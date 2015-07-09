@@ -1,9 +1,7 @@
-'use strict';
+
 
 var PRISTINE_CLASS = 'ng-pristine',
     DIRTY_CLASS = 'ng-dirty';
-
-var Module = angular.module('datePicker');
 
 Module.constant('dateTimeConfig', {
   template: function (attrs) {

@@ -5,10 +5,8 @@
  * @author Michael C
  */
 
-'use strict';
 
-//Build off of the datePicker module
-var Module = angular.module('datePicker');
+
 
 /*
  * datePickerApp Directive
@@ -103,11 +101,12 @@ Module.directive('datePickerApp', function () {
                 this.closeDateRange(); 
             }
             //Cycle through start --> end --> close
+            /* Toggle is off for this build
             else if($scope.viewMode == "singleDate") {
                 $scope.startCal ? this.toggleStartCal() : this.closeDateRange();
-            }
+            } */
             else {
-                //Do nothing...
+                this.closeDateRange(); 
             }
         };
         
@@ -235,14 +234,6 @@ Module.directive('datePickerApp', function () {
          
     },
     link: function (scope, element, attrs) {
-        //These are the initial dates that appear in the calendar
-        scope.selectedStartDate = null;
-        scope.selectedEndDate = null;
-        
-        //These are the initial dates that appear in the input boxes
-        scope.visualStartDate = null;
-        scope.visualEndDate = null;
-        
         //Default to the "L" format
         scope.dateFormat = (scope.dateFormat || "L");
         
@@ -342,6 +333,7 @@ Module.directive('datePickerApp', function () {
          * @author Michael C
          */
         scope.$watch('selectedStartDate', function(date) {
+            console.log(date);
             if(date != null) {
                 setSelectedStartDate(date);
             }

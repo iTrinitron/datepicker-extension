@@ -374,8 +374,6 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
     }
   };
 }]);
-'use strict';
-
 angular.module('datePicker').factory('datePickerUtils', function(){
   var createNewDate = function(year, month, day, hour, minute) {
     // without any arguments, the default date will be 1899-12-31T00:00:00.000Z
@@ -528,11 +526,6 @@ angular.module('datePicker').factory('datePickerUtils', function(){
  * @modified Michael Chin
  */
 
-'use strict';
-
-//Build off of the datePicker module
-var Module = angular.module('datePicker');
-
 /*
  * dateRange Directive
  */
@@ -632,10 +625,6 @@ Module.directive('dateRange', function () {
  * 
  */
 
-'use strict';
-
-var Module = angular.module('datePicker');
-
 Module.directive('dateInput', function() {
     return {
         require: '?ngModel',
@@ -662,10 +651,8 @@ Module.directive('dateInput', function() {
  * @author Michael C
  */
 
-'use strict';
 
-//Build off of the datePicker module
-var Module = angular.module('datePicker');
+
 
 /*
  * datePickerApp Directive
@@ -760,11 +747,12 @@ Module.directive('datePickerApp', function () {
                 this.closeDateRange(); 
             }
             //Cycle through start --> end --> close
+            /* Toggle is off for this build
             else if($scope.viewMode == "singleDate") {
                 $scope.startCal ? this.toggleStartCal() : this.closeDateRange();
-            }
+            } */
             else {
-                //Do nothing...
+                this.closeDateRange(); 
             }
         };
         
@@ -892,14 +880,6 @@ Module.directive('datePickerApp', function () {
          
     },
     link: function (scope, element, attrs) {
-        //These are the initial dates that appear in the calendar
-        scope.selectedStartDate = null;
-        scope.selectedEndDate = null;
-        
-        //These are the initial dates that appear in the input boxes
-        scope.visualStartDate = null;
-        scope.visualEndDate = null;
-        
         //Default to the "L" format
         scope.dateFormat = (scope.dateFormat || "L");
         
@@ -999,6 +979,7 @@ Module.directive('datePickerApp', function () {
          * @author Michael C
          */
         scope.$watch('selectedStartDate', function(date) {
+            console.log(date);
             if(date != null) {
                 setSelectedStartDate(date);
             }
@@ -1069,12 +1050,10 @@ Module.directive('datePickerApp', function () {
     }
   };
 });
-'use strict';
+
 
 var PRISTINE_CLASS = 'ng-pristine',
     DIRTY_CLASS = 'ng-dirty';
-
-var Module = angular.module('datePicker');
 
 Module.constant('dateTimeConfig', {
   template: function (attrs) {

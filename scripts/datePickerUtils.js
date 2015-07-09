@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('datePicker').factory('datePickerUtils', function(){
   var createNewDate = function(year, month, day, hour, minute) {
     // without any arguments, the default date will be 1899-12-31T00:00:00.000Z

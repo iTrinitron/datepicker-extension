@@ -1,3 +1,305 @@
+//
+// Variables
+// --------------------------------------------------
+
+
+// Global values
+// --------------------------------------------------
+
+
+// Grays
+// -------------------------
+@black:                 #000;
+@grayDarker:            #222;
+@grayDark:              #333;
+@gray:                  #555;
+@grayLight:             #999;
+@grayLighter:           #eee;
+@white:                 #fff;
+
+
+// Accent colors
+// -------------------------
+@blue:                  #049cdb;
+@blueDark:              #0064cd;
+@green:                 #46a546;
+@red:                   #9d261d;
+@yellow:                #ffc40d;
+@orange:                #f89406;
+@pink:                  #c3325f;
+@purple:                #7a43b6;
+
+
+// Scaffolding
+// -------------------------
+@bodyBackground:        @white;
+@textColor:             @grayDark;
+
+
+// Links
+// -------------------------
+@linkColor:             #08c;
+@linkColorHover:        darken(@linkColor, 15%);
+
+
+// Typography
+// -------------------------
+@sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif;
+@serifFontFamily:       Georgia, "Times New Roman", Times, serif;
+@monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace;
+
+@baseFontSize:          14px;
+@baseFontFamily:        @sansFontFamily;
+@baseLineHeight:        20px;
+@altFontFamily:         @serifFontFamily;
+
+@headingsFontFamily:    inherit; // empty to use BS default, @baseFontFamily
+@headingsFontWeight:    bold;    // instead of browser default, bold
+@headingsColor:         inherit; // empty to use BS default, @textColor
+
+
+// Component sizing
+// -------------------------
+// Based on 14px font-size and 20px line-height
+
+@fontSizeLarge:         @baseFontSize * 1.25; // ~18px
+@fontSizeSmall:         @baseFontSize * 0.85; // ~12px
+@fontSizeMini:          @baseFontSize * 0.75; // ~11px
+
+@paddingLarge:          11px 19px; // 44px
+@paddingSmall:          2px 10px;  // 26px
+@paddingMini:           0 6px;   // 22px
+
+@baseBorderRadius:      4px;
+@borderRadiusLarge:     6px;
+@borderRadiusSmall:     3px;
+
+
+// Tables
+// -------------------------
+@tableBackground:                   transparent; // overall background-color
+@tableBackgroundAccent:             #f9f9f9; // for striping
+@tableBackgroundHover:              #f5f5f5; // for hover
+@tableBorder:                       #ddd; // table and cell border
+
+// Buttons
+// -------------------------
+@btnBackground:                     @white;
+@btnBackgroundHighlight:            darken(@white, 10%);
+@btnBorder:                         #bbb;
+
+@btnPrimaryBackground:              @linkColor;
+@btnPrimaryBackgroundHighlight:     spin(@btnPrimaryBackground, 20%);
+
+@btnInfoBackground:                 #5bc0de;
+@btnInfoBackgroundHighlight:        #2f96b4;
+
+@btnSuccessBackground:              #62c462;
+@btnSuccessBackgroundHighlight:     #51a351;
+
+@btnWarningBackground:              lighten(@orange, 15%);
+@btnWarningBackgroundHighlight:     @orange;
+
+@btnDangerBackground:               #ee5f5b;
+@btnDangerBackgroundHighlight:      #bd362f;
+
+@btnInverseBackground:              #444;
+@btnInverseBackgroundHighlight:     @grayDarker;
+
+
+// Forms
+// -------------------------
+@inputBackground:               @white;
+@inputBorder:                   #ccc;
+@inputBorderRadius:             @baseBorderRadius;
+@inputDisabledBackground:       @grayLighter;
+@formActionsBackground:         #f5f5f5;
+@inputHeight:                   @baseLineHeight + 10px; // base line-height + 8px vertical padding + 2px top/bottom border
+
+
+// Dropdowns
+// -------------------------
+@dropdownBackground:            @white;
+@dropdownBorder:                rgba(0,0,0,.2);
+@dropdownDividerTop:            #e5e5e5;
+@dropdownDividerBottom:         @white;
+
+@dropdownLinkColor:             @grayDark;
+@dropdownLinkColorHover:        @white;
+@dropdownLinkColorActive:       @white;
+
+@dropdownLinkBackgroundActive:  @linkColor;
+@dropdownLinkBackgroundHover:   @dropdownLinkBackgroundActive;
+
+
+
+// COMPONENT VARIABLES
+// --------------------------------------------------
+
+
+// Z-index master list
+// -------------------------
+// Used for a bird's eye view of components dependent on the z-axis
+// Try to avoid customizing these :)
+@zindexDropdown:          1000;
+@zindexPopover:           1010;
+@zindexTooltip:           1030;
+@zindexFixedNavbar:       1030;
+@zindexModalBackdrop:     1040;
+@zindexModal:             1050;
+
+
+// Sprite icons path
+// -------------------------
+@iconSpritePath:          "../img/glyphicons-halflings.png";
+@iconWhiteSpritePath:     "../img/glyphicons-halflings-white.png";
+
+
+// Input placeholder text color
+// -------------------------
+@placeholderText:         @grayLight;
+
+
+// Hr border color
+// -------------------------
+@hrBorder:                @grayLighter;
+
+
+// Horizontal forms & lists
+// -------------------------
+@horizontalComponentOffset:       180px;
+
+
+// Wells
+// -------------------------
+@wellBackground:                  #f5f5f5;
+
+
+// Navbar
+// -------------------------
+@navbarCollapseWidth:             979px;
+@navbarCollapseDesktopWidth:      @navbarCollapseWidth + 1;
+
+@navbarHeight:                    40px;
+@navbarBackgroundHighlight:       #ffffff;
+@navbarBackground:                darken(@navbarBackgroundHighlight, 5%);
+@navbarBorder:                    darken(@navbarBackground, 12%);
+
+@navbarText:                      #777;
+@navbarLinkColor:                 #777;
+@navbarLinkColorHover:            @grayDark;
+@navbarLinkColorActive:           @gray;
+@navbarLinkBackgroundHover:       transparent;
+@navbarLinkBackgroundActive:      darken(@navbarBackground, 5%);
+
+@navbarBrandColor:                @navbarLinkColor;
+
+// Inverted navbar
+@navbarInverseBackground:                #111111;
+@navbarInverseBackgroundHighlight:       #222222;
+@navbarInverseBorder:                    #252525;
+
+@navbarInverseText:                      @grayLight;
+@navbarInverseLinkColor:                 @grayLight;
+@navbarInverseLinkColorHover:            @white;
+@navbarInverseLinkColorActive:           @navbarInverseLinkColorHover;
+@navbarInverseLinkBackgroundHover:       transparent;
+@navbarInverseLinkBackgroundActive:      @navbarInverseBackground;
+
+@navbarInverseSearchBackground:          lighten(@navbarInverseBackground, 25%);
+@navbarInverseSearchBackgroundFocus:     @white;
+@navbarInverseSearchBorder:              @navbarInverseBackground;
+@navbarInverseSearchPlaceholderColor:    #ccc;
+
+@navbarInverseBrandColor:                @navbarInverseLinkColor;
+
+
+// Pagination
+// -------------------------
+@paginationBackground:                #fff;
+@paginationBorder:                    #ddd;
+@paginationActiveBackground:          #f5f5f5;
+
+
+// Hero unit
+// -------------------------
+@heroUnitBackground:              @grayLighter;
+@heroUnitHeadingColor:            inherit;
+@heroUnitLeadColor:               inherit;
+
+
+// Form states and alerts
+// -------------------------
+@warningText:             #c09853;
+@warningBackground:       #fcf8e3;
+@warningBorder:           darken(spin(@warningBackground, -10), 3%);
+
+@errorText:               #b94a48;
+@errorBackground:         #f2dede;
+@errorBorder:             darken(spin(@errorBackground, -10), 3%);
+
+@successText:             #468847;
+@successBackground:       #dff0d8;
+@successBorder:           darken(spin(@successBackground, -10), 5%);
+
+@infoText:                #3a87ad;
+@infoBackground:          #d9edf7;
+@infoBorder:              darken(spin(@infoBackground, -10), 7%);
+
+
+// Tooltips and popovers
+// -------------------------
+@tooltipColor:            #fff;
+@tooltipBackground:       #000;
+@tooltipArrowWidth:       5px;
+@tooltipArrowColor:       @tooltipBackground;
+
+@popoverBackground:       #fff;
+@popoverArrowWidth:       10px;
+@popoverArrowColor:       #fff;
+@popoverTitleBackground:  darken(@popoverBackground, 3%);
+
+// Special enhancement for popovers
+@popoverArrowOuterWidth:  @popoverArrowWidth + 1;
+@popoverArrowOuterColor:  rgba(0,0,0,.25);
+
+
+
+// GRID
+// --------------------------------------------------
+
+
+// Default 940px grid
+// -------------------------
+@gridColumns:             12;
+@gridColumnWidth:         60px;
+@gridGutterWidth:         20px;
+@gridRowWidth:            (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
+
+// 1200px min
+@gridColumnWidth1200:     70px;
+@gridGutterWidth1200:     30px;
+@gridRowWidth1200:        (@gridColumns * @gridColumnWidth1200) + (@gridGutterWidth1200 * (@gridColumns - 1));
+
+// 768px-979px
+@gridColumnWidth768:      42px;
+@gridGutterWidth768:      20px;
+@gridRowWidth768:         (@gridColumns * @gridColumnWidth768) + (@gridGutterWidth768 * (@gridColumns - 1));
+
+
+// Fluid grid
+// -------------------------
+@fluidGridColumnWidth:    percentage(@gridColumnWidth/@gridRowWidth);
+@fluidGridGutterWidth:    percentage(@gridGutterWidth/@gridRowWidth);
+
+// 1200px min
+@fluidGridColumnWidth1200:     percentage(@gridColumnWidth1200/@gridRowWidth1200);
+@fluidGridGutterWidth1200:     percentage(@gridGutterWidth1200/@gridRowWidth1200);
+
+// 768px-979px
+@fluidGridColumnWidth768:      percentage(@gridColumnWidth768/@gridRowWidth768);
+@fluidGridGutterWidth768:      percentage(@gridGutterWidth768/@gridRowWidth768);
+
 @import url('variables');
 
 //
@@ -691,4 +993,549 @@
 
   }
 
+}
+
+@import "variables.less";
+@import "mixins.less";
+
+.date-picker-date-time {
+  position: absolute;
+}
+[date-picker-wrapper] {
+  position: absolute;
+  min-width: 220px;
+  z-index: 10;
+  display: block;
+  font-size: 14px;
+}
+[date-time-append] [date-picker-wrapper] [date-picker] {
+  margin-top: -30px;
+}
+
+[date-time-append] [date-picker]{
+  position: relative;
+  margin-right: -1000px;
+  margin-bottom: -1000px;
+}
+
+[date-range] [date-picker] {
+  .after.before{
+    .buttonBackground(@btnInfoBackground, spin(@btnInfoBackgroundHighlight, 20));
+  }
+}
+
+[date-picker].hidden { display: none; }
+
+[date-picker] {
+  .user-select(none);
+  .border-radius(4px);
+  background-color: #fff;
+
+  /* GENERAL */
+
+  padding: 4px;
+
+  table {
+    margin: 0;
+  }
+
+  td, th {
+    padding: 4px 5px;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    .border-radius(4px);
+    border: none;
+
+  }
+
+  .switch{
+    width: 145px;
+  }
+
+  span {
+      display: block;
+			width: 23%;
+			height: 26px;
+			line-height: 25px;
+			float: left;
+			margin: 1%;
+			cursor: pointer;
+			.border-radius(4px);
+			&:hover {
+				background: @grayLighter;
+			}
+			&.disabled, &.disabled:hover {
+				background:none;
+				color: @grayLight;
+				cursor: default;
+			}
+
+  }
+
+  .active , .now{
+    .buttonBackground(@btnPrimaryBackground, spin(@btnPrimaryBackground, 20));
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+  }
+
+  .now {
+    .buttonBackground(@btnDangerBackground, spin(@btnDangerBackground, 20));
+  }
+
+  .disabled {
+    background: none;
+    color: #999999 !important;
+    cursor: default;
+  }
+
+  /* SPECIFIC */
+
+  [ng-switch-when="year"], [ng-switch-when="month"], [ng-switch-when="minutes"]{
+    span {
+      height: 54px;
+      line-height: 54px;
+    }
+  }
+  [ng-switch-when="date"]{
+    td {
+      padding: 0;
+    }
+    span{
+      width: 100%;
+      height: 26px;
+      line-height: 26px;
+    }
+  }
+
+  th:hover, [ng-switch-when="date"] td span:hover{
+    background: @grayLighter;
+	  cursor: pointer;
+  }
+}
+
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.date-picker-date-time {
+  position: absolute;
+}
+[date-picker-wrapper] {
+  position: absolute;
+  min-width: 220px;
+  z-index: 10;
+  display: block;
+  font-size: 14px;
+}
+[date-time-append] [date-picker-wrapper] [date-picker] {
+  margin-top: -30px;
+}
+[date-time-append] [date-picker] {
+  position: relative;
+  margin-right: -1000px;
+  margin-bottom: -1000px;
+}
+[date-range] [date-picker] .after.before {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #499dcd;
+  background-image: -moz-linear-gradient(top, #5bc0de, #2f6ab4);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5bc0de), to(#2f6ab4));
+  background-image: -webkit-linear-gradient(top, #5bc0de, #2f6ab4);
+  background-image: -o-linear-gradient(top, #5bc0de, #2f6ab4);
+  background-image: linear-gradient(to bottom, #5bc0de, #2f6ab4);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2f6ab4', GradientType=0);
+  border-color: #2f6ab4 #2f6ab4 #1f4677;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #2f6ab4;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+[date-range] [date-picker] .after.before:hover,
+[date-range] [date-picker] .after.before:active,
+[date-range] [date-picker] .after.before.active,
+[date-range] [date-picker] .after.before.disabled,
+[date-range] [date-picker] .after.before[disabled] {
+  color: #ffffff;
+  background-color: #2f6ab4;
+  *background-color: #2a5ea0;
+}
+[date-range] [date-picker] .after.before:active,
+[date-range] [date-picker] .after.before.active {
+  background-color: #24528c \9;
+}
+[date-picker].hidden {
+  display: none;
+}
+[date-picker] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #fff;
+  /* GENERAL */
+  padding: 4px;
+  /* SPECIFIC */
+}
+[date-picker] table {
+  margin: 0;
+}
+[date-picker] td,
+[date-picker] th {
+  padding: 4px 5px;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border: none;
+}
+[date-picker] .switch {
+  width: 145px;
+}
+[date-picker] span {
+  display: block;
+  width: 23%;
+  height: 26px;
+  line-height: 25px;
+  float: left;
+  margin: 1%;
+  cursor: pointer;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+[date-picker] span:hover {
+  background: #eeeeee;
+}
+[date-picker] span.disabled,
+[date-picker] span.disabled:hover {
+  background: none;
+  color: #999999;
+  cursor: default;
+}
+[date-picker] .active,
+[date-picker] .now {
+  color: #ffffff;
+  background-color: #006dcc;
+  background-image: -moz-linear-gradient(top, #0088cc, #0044cc);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));
+  background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);
+  background-image: -o-linear-gradient(top, #0088cc, #0044cc);
+  background-image: linear-gradient(to bottom, #0088cc, #0044cc);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);
+  border-color: #0044cc #0044cc #002a80;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #0044cc;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+[date-picker] .active:hover,
+[date-picker] .now:hover,
+[date-picker] .active:active,
+[date-picker] .now:active,
+[date-picker] .active.active,
+[date-picker] .now.active,
+[date-picker] .active.disabled,
+[date-picker] .now.disabled,
+[date-picker] .active[disabled],
+[date-picker] .now[disabled] {
+  color: #ffffff;
+  background-color: #0044cc;
+  *background-color: #003bb3;
+}
+[date-picker] .active:active,
+[date-picker] .now:active,
+[date-picker] .active.active,
+[date-picker] .now.active {
+  background-color: #003399 \9;
+}
+[date-picker] .now {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #ee735b;
+  background-image: -moz-linear-gradient(top, #ee5f5b, #ee905b);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#ee905b));
+  background-image: -webkit-linear-gradient(top, #ee5f5b, #ee905b);
+  background-image: -o-linear-gradient(top, #ee5f5b, #ee905b);
+  background-image: linear-gradient(to bottom, #ee5f5b, #ee905b);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b', endColorstr='#ffee905b', GradientType=0);
+  border-color: #ee905b #ee905b #e56218;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #ee905b;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+[date-picker] .now:hover,
+[date-picker] .now:active,
+[date-picker] .now.active,
+[date-picker] .now.disabled,
+[date-picker] .now[disabled] {
+  color: #ffffff;
+  background-color: #ee905b;
+  *background-color: #ec8044;
+}
+[date-picker] .now:active,
+[date-picker] .now.active {
+  background-color: #e9712d \9;
+}
+[date-picker] .disabled {
+  background: none;
+  color: #999999 !important;
+  cursor: default;
+}
+[date-picker] [ng-switch-when="year"] span,
+[date-picker] [ng-switch-when="month"] span,
+[date-picker] [ng-switch-when="minutes"] span {
+  height: 54px;
+  line-height: 54px;
+}
+[date-picker] [ng-switch-when="date"] td {
+  padding: 0;
+}
+[date-picker] [ng-switch-when="date"] span {
+  width: 100%;
+  height: 26px;
+  line-height: 26px;
+}
+[date-picker] th:hover,
+[date-picker] [ng-switch-when="date"] td span:hover {
+  background: #eeeeee;
+  cursor: pointer;
+}
+
+/*
+ * Date Range App Stylesheet
+ *
+ * Stylesheet for the datePicker directive.  Many of these classes override the
+ * base library stylesheets
+ *
+ * date: 6/23/2015
+ * @author Michael C
+ */
+
+/*
+ * The container holding the dateRangeApp
+ */
+
+/*
+ * Move the application away from the sides for demo purposes
+ *
+ * @REMOVE ON LIVE DEPLOYMENT
+ */
+
+
+.dropdown-menu {
+  margin-top: 5px;
+  box-shadow: none;
+  border-radius: 0px;
+}
+
+
+[date-range] {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  width: 590px;
+  height: 316px;
+  //dateRange inner container
+  .dateRangeContainer {
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px;
+  }
+  //Each datePicker container
+  [date-picker] {
+	margin-top: 8px;
+	float: left;
+    //Month header of each datePicker container -- ex. "July"
+    .switch {
+      font-weight: normal;
+      text-transform: uppercase;
+      width: auto;
+      text-align: center;
+      border-bottom: 1px solid #999999;
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+    }
+    //Days that are selected
+    .active.after.before, .after.before, .active.after, .active.active {
+      color: #FFF;
+      background-color: #00c0cd;
+      background-image: none; /* The original datePicker uses a linear gradient image  */
+    }
+    //Days that are unselected
+    .day {
+      color: #00c0cd;
+    }
+
+    //Days that are inactive
+    .disabled {
+      color: #cccccc;
+    }
+    .disabled:hover {
+      background: inherit;
+      cursor: default;
+    }
+    .after.before.disabled {
+      background-color: inherit;
+    }
+
+  }
+  .right {
+	float: right;
+  }
+  //Arrows to switch month ranges
+  .arrow {
+    position: relative;
+    cursor: pointer;
+    color: #00c0cd;
+    font-size: 36px;
+    top: -4px;
+  }
+  .leftArrow {
+    left: 30px;
+    float: left;
+  }
+  .rightArrow {
+    right: 30px;
+    float: right;
+  }
+  /* Sub-header of each datePicker container -- ex. days of the week "S M T.." */
+  .dayOfWeekBox {
+    color: #666666;
+    border-top: 1px solid gray;
+    font-weight: normal;
+    text-transform: uppercase;
+  }
+  th {
+    font-weight: normal;
+  }
+  //Days
+  td {
+    height: 33px;
+    width: 33px;
+  }
+  span {
+    border-radius: 0px;
+    height: 33px;
+    line-height: 33px;
+  }
+  //Headers for the days of the week
+  th:hover {
+    background: inherit;
+    cursor: default;
+  }
+}
+
+
+//The input boxes for the dropdown
+
+[date-picker-app] {
+  .dropdown-toggle {
+    border-radius: 0px;
+  }
+  .dropdown-toggle:focus {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    transition-timing-function: linear;
+  }
+  //The Triangle Pointer for the dropdown menu
+  .tri-up {
+    // Styling block element, not required
+    position: relative;
+    top: -6px;
+    left: 25px;
+  }
+  .triangle-left {
+    left: 25px;
+  }
+
+  .triangle-right {
+    left: 250px;
+  }
+  .triangle-single-right {
+      left: 150px !important;
+  }
+
+  .tri-up:before, .tri-up:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    border-top: 0;
+  }
+
+  //Stroke
+  .tri-up:before {
+    bottom: -1px;
+    left: 21px;
+    /* If 1px darken stroke slightly */
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    border-width: 19px;
+  }
+
+  // Fill
+  .tri-up:after {
+    bottom: -1px;
+    left: 22px;
+    border-bottom-color: white;
+    border-width: 18px;
+  }
+}
+
+.unstyled::-webkit-inner-spin-button,
+.unstyled::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+.inline {
+  display: inline-block;
+  width: 50% !important;
+  float: left;
+
+  &.left {
+    border-right-width: 0!important;
+    &:after{
+      content:" - "
+    }
+  }
+  &.right {
+    border-left-width: 0!important;
+  }
 }

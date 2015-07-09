@@ -12,10 +12,6 @@
  * 
  */
 
-'use strict';
-
-var Module = angular.module('datePicker');
-
 Module.directive('dateInput', function() {
     return {
         require: '?ngModel',
