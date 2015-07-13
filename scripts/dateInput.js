@@ -18,14 +18,14 @@ Module.directive('dateInput', function() {
         scope: {
             dateValue: '='
         },
-        controller: function($scope) {
+        controller: ["$scope",  function($scope) {
             $scope.fixDate = function(d){
                 //var newDate = new Date.create(d).toString();
                 //console.log(newDate);
                 $scope.dateValue = "help";
 
             };
-        },
+        }],
         link: function(scope, element, attrs, ngModel) {
             
         }			

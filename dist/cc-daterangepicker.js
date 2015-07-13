@@ -22,7 +22,7 @@
 var Module = angular.module('datePicker', []);
 
 Module.constant('datePickerConfig', {
-  template: 'templates/datepicker.html',
+  template: '/etc/designs/site/cc/js/common/angular-dateRangePicker/templates/datepicker.html',
   view: 'month',
   views: ['year', 'month', 'date', 'hours', 'minutes'],
   step: 5
@@ -56,9 +56,9 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       before: '=?',
       pid: '='
     },
-    controller: function($scope) {
+    controller: ["$scope", function($scope) {
         
-    },
+    }],
     link: function (scope, element, attrs, cntrl) {
         var ngModel = cntrl[0];
         var datePickerApp = cntrl[1];
@@ -532,7 +532,7 @@ angular.module('datePicker').factory('datePickerUtils', function(){
 Module.directive('dateRange', function () {
     return {
         require: '^datePickerApp',
-        templateUrl: 'templates/daterange.html',
+        templateUrl: '/etc/designs/site/cc/js/common/angular-dateRangePicker/templates/daterange.html',
         scope: {
             start: '=',
             end: '='
@@ -631,14 +631,14 @@ Module.directive('dateInput', function() {
         scope: {
             dateValue: '='
         },
-        controller: function($scope) {
+        controller: ["$scope",  function($scope) {
             $scope.fixDate = function(d){
                 //var newDate = new Date.create(d).toString();
                 //console.log(newDate);
                 $scope.dateValue = "help";
 
             };
-        },
+        }],
         link: function(scope, element, attrs, ngModel) {
             
         }			
@@ -659,11 +659,11 @@ Module.directive('dateInput', function() {
  */
 Module.directive('datePickerApp', function () {
   return {
-    templateUrl: 'templates/datepickerapp.html',
+    templateUrl: '/etc/designs/site/cc/js/common/angular-dateRangePicker/templates/datepickerapp.html',
     scope: {
         //maxStartDateOffset: '@',
-        selectedStartDate: '=fromDate',
-        selectedEndDate: '=toDate',
+        formStartDate: '=fromDate',
+        formEndDate: '=toDate',
         viewMode: '@',
         dateOutputFormat: '@',
         //dateLegalFormats: '='
@@ -677,7 +677,7 @@ Module.directive('datePickerApp', function () {
         maxStartDateOffset: '@'
     },
     //Define controller functions to be passed down to the datePicker directive
-    controller: function($scope) {
+    controller: ["$scope", function($scope) {
         /*
          * Directive attribute defaults
          */
@@ -699,6 +699,14 @@ Module.directive('datePickerApp', function () {
         $scope.dateOutputFormat = ($scope.dateOutputFormat || "MMM DD YYYY");
         $scope.startPlaceholderText = ($scope.startPlaceholderText || "");
         $scope.endPlaceholderText = ($scope.endPlaceholderText || "");
+        
+        $scope.$watch('formStartDate', function(value) {
+            $scope.selectedStartDate = new Date(value);
+            console.log("startdate is " + $scope.formStartDate);
+        });
+        $scope.$watch('formEndDate', function(value) {
+            $scope.selectedEndDate = new Date(value);
+        });
         
         this.minStartDate = new Date($scope.minStartDate || new Date()).setHours(0, 0, 0, 0);
         this.maxStartDate = new Date($scope.maxStartDate).setHours(0, 0, 0, 0);
@@ -878,7 +886,7 @@ Module.directive('datePickerApp', function () {
             return new Date(date.getFullYear(), date.getMonth() + 1, 1);
         };
          
-    },
+    }],
     link: function (scope, element, attrs) {
         //Default to the "L" format
         scope.dateFormat = (scope.dateFormat || "L");
@@ -974,12 +982,11 @@ Module.directive('datePickerApp', function () {
          * 
          * Updates the inputs everytime a new date is selected on the calendar
          * 
-         * @param date string
+         * @param javascript Date object
          * 
          * @author Michael C
          */
         scope.$watch('selectedStartDate', function(date) {
-            console.log(date);
             if(date != null) {
                 setSelectedStartDate(date);
             }
@@ -989,6 +996,24 @@ Module.directive('datePickerApp', function () {
                 setSelectedEndDate(date);
             }
         });
+        
+        function setFormStartDate(date) {
+            if(isDate(date)) {
+                scope.formStartDate = date.toISOString();
+            }
+            else {
+                scope.formStartDate = "";
+            }
+        }
+        
+        function setFormEndDate(date) {
+            if(isDate(date)) {
+                scope.formEndDate = date.toISOString();
+            }
+            else {
+                scope.formEndDate = "";
+            }
+        }
         
         /*
          * Mutator
@@ -1000,6 +1025,12 @@ Module.directive('datePickerApp', function () {
          */
         function setSelectedStartDate(date) {
             scope.selectedStartDate = date;
+            console.log("date*******" + date);
+            
+            if(isDate(date)) {scope.formStartDate = date.toISOString();} 
+           //setFormStartDate(date);
+            
+            
             if(!scope.startIsFocused) {
                 if(isDate(date)) {
                     scope.visualStartDate = formatDateInput(date);
@@ -1015,6 +1046,10 @@ Module.directive('datePickerApp', function () {
         }
         function setSelectedEndDate(date) {
             scope.selectedEndDate = date;
+            
+            if(isDate(date)) {scope.formEndDate = date.toISOString();} 
+            //setFormEndDate(date);
+            
             if(!scope.endIsFocused) {
                 if(isDate(date)) {
                     scope.visualEndDate = formatDateInput(date);

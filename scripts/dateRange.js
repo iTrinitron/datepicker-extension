@@ -12,7 +12,7 @@
 Module.directive('dateRange', function () {
     return {
         require: '^datePickerApp',
-        templateUrl: 'templates/daterange.html',
+        templateUrl: '/etc/designs/site/cc/js/common/angular-dateRangePicker/templates/daterange.html',
         scope: {
             start: '=',
             end: '='

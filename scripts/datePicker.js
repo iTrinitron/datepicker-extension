@@ -22,7 +22,7 @@
 var Module = angular.module('datePicker', []);
 
 Module.constant('datePickerConfig', {
-  template: 'templates/datepicker.html',
+  template: '/etc/designs/site/cc/js/common/angular-dateRangePicker/templates/datepicker.html',
   view: 'month',
   views: ['year', 'month', 'date', 'hours', 'minutes'],
   step: 5
@@ -56,9 +56,9 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       before: '=?',
       pid: '='
     },
-    controller: function($scope) {
+    controller: ["$scope", function($scope) {
         
-    },
+    }],
     link: function (scope, element, attrs, cntrl) {
         var ngModel = cntrl[0];
         var datePickerApp = cntrl[1];

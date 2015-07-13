@@ -44,7 +44,13 @@ module.exports = function(grunt) {
     copy: {
       js: {
         src: 'dist/cc-daterangepicker.js',
-        dest: '/Users/michaelchin1/cq/cms/cms/cms-base/cms-sites/cms-cc/cc-view/cc-design/src/content/jcr_root/etc/designs/site/cc/js/common/angular-dateRangePicker/test.js'
+        dest: '/Users/michaelchin1/cq/cms/cms/cms-base/cms-sites/cms-cc/cc-view/cc-design/src/content/jcr_root/etc/designs/site/cc/js/common/angular-dateRangePicker/<%= pkg.name %>.js'
+      }
+    },
+    uglify: {
+      js: {
+        src: 'dist/cc-daterangepicker.js',
+        dest: 'dist/cc-ugly.js'
       }
     }
    });
