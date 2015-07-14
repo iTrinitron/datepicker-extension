@@ -1365,12 +1365,27 @@
   border-radius: 0px;
   left: -92px;
     //Control where the container lies on the left
-    &.date-range-left {
-        left: -140px;
+    &.mobile {
+        left: -12px;
     }
-    //Control where the container lies on the right
-    &.date-range-right {
-
+    
+    .triangle-left {
+    left: 110px;
+    }
+    .triangle-right {
+      left: 250px;
+    }
+    
+    &.mobile .triangle-left {
+        left: 40px;
+    }
+    &.mobile .triangle-right {
+        left: 160px;
+    }
+    
+    &.mobile [date-range] {
+        width: auto;
+        height: auto;
     }
 }
 
@@ -1378,8 +1393,13 @@
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
   width: 590px;
-  height: 316px;
+  height: 316px; //mobile version
   //dateRange inner container
+  
+  &.mobile {
+      width: auto;
+      height: auto;
+  }
   .dateRangeContainer {
 	margin-left: auto;
 	margin-right: auto;
@@ -1483,6 +1503,10 @@
     right: 30px;
     float: right;
   }
+  .disabledArrow {
+      color: fade(#00c0cd, 50%);
+      cursor: default;
+  }
   /* Sub-header of each datePicker container -- ex. days of the week "S M T.." */
   .dayOfWeekBox {
     color: #666666;
@@ -1529,17 +1553,7 @@
     top: -6px;
     left: 25px;
   }
-  .triangle-left {
-    left: 160px;
-  }
-
-  .triangle-right {
-    left: 250px;
-  }
-  .triangle-single-right {
-      left: 227px !important;
-  }
-
+  
   .tri-up:before, .tri-up:after {
     content: "";
     position: absolute;

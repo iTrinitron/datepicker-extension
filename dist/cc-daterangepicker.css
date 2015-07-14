@@ -543,8 +543,24 @@
   border-radius: 0px;
   left: -92px;
 }
-.dropdown-menu.date-range-left {
-  left: -140px;
+.dropdown-menu.mobile {
+  left: -12px;
+}
+.dropdown-menu .triangle-left {
+  left: 110px;
+}
+.dropdown-menu .triangle-right {
+  left: 250px;
+}
+.dropdown-menu.mobile .triangle-left {
+  left: 40px;
+}
+.dropdown-menu.mobile .triangle-right {
+  left: 160px;
+}
+.dropdown-menu.mobile [date-range] {
+  width: auto;
+  height: auto;
 }
 [date-range] {
   font-family: 'Roboto', sans-serif;
@@ -552,6 +568,10 @@
   width: 590px;
   height: 316px;
   /* Sub-header of each datePicker container -- ex. days of the week "S M T.." */
+}
+[date-range].mobile {
+  width: auto;
+  height: auto;
 }
 [date-range] .dateRangeContainer {
   margin-left: auto;
@@ -650,6 +670,10 @@
   right: 30px;
   float: right;
 }
+[date-range] .disabledArrow {
+  color: rgba(0, 192, 205, 0.5);
+  cursor: default;
+}
 [date-range] .dayOfWeekBox {
   color: #666666;
   border-top: 1px solid gray;
@@ -684,15 +708,6 @@
   position: relative;
   top: -6px;
   left: 25px;
-}
-[date-picker-app] .triangle-left {
-  left: 160px;
-}
-[date-picker-app] .triangle-right {
-  left: 250px;
-}
-[date-picker-app] .triangle-single-right {
-  left: 227px !important;
 }
 [date-picker-app] .tri-up:before,
 [date-picker-app] .tri-up:after {

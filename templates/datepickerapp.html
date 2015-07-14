@@ -32,11 +32,11 @@
 
     <!-- Calendar Dropdown -->
     <!-- preventDefault and stopPropagation block calendar clicks from autoclosing the app -->
-    <div class="dropdown-menu" ng-click="$event.preventDefault();$event.stopPropagation();">
+    <div class="dropdown-menu" ng-class="{'mobile': isMobile}" ng-click="$event.preventDefault();$event.stopPropagation();">
         <!-- Triangle Polygon -->
         <div class="tri-up" ng-class="{'triangle-left':startCal, 'triangle-right':!startCal, 'triangle-single-right':(isSingle && !startCal)}"></div>
         <!-- dateRange Directive -->
 
-        <div date-range start="selectedStartDate" end="selectedEndDate"></div>
+        <div date-range start="selectedStartDate" end="selectedEndDate" is-mobile="isMobile"></div>
     </div>
 </div>

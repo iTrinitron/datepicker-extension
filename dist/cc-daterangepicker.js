@@ -542,7 +542,8 @@ Module.directive('dateRange', function () {
         templateUrl: '/etc/designs/site/cc/js/common/angular-dateRangePicker/templates/daterange.html',
         scope: {
             start: '=',
-            end: '='
+            end: '=',
+            isMobile: '='
         },
         controller: function($scope) {
             $scope.isPrevMonthValid = false;
@@ -721,6 +722,8 @@ Module.directive('datePickerApp', ['$timeout', function($timeout) {
         /*
          * Directive attribute defaults
          */
+        
+        $scope.isMobile = true;
         
         //Default month to start the datePicker calendars at
         this.startDate = new Date();

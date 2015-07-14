@@ -15,7 +15,8 @@ Module.directive('dateRange', function () {
         templateUrl: '/etc/designs/site/cc/js/common/angular-dateRangePicker/templates/daterange.html',
         scope: {
             start: '=',
-            end: '='
+            end: '=',
+            isMobile: '='
         },
         controller: function($scope) {
             $scope.isPrevMonthValid = false;

@@ -27,7 +27,8 @@ Module.directive('datePickerApp', ['$timeout', function($timeout) {
         maxEndDate: '@',
         maxEndDateOffset: '@',
         maxStartDateOffset: '@',
-        closeDelay: '@'
+        closeDelay: '@',
+        isMobile: '='
     },
     //Define controller functions to be passed down to the datePicker directive
     controller: ["$scope", function($scope) {
