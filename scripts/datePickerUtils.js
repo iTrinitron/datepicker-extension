@@ -40,9 +40,10 @@ angular.module('datePicker').factory('datePickerUtils', function(){
       var weeks = [];
       var week;
       while (weeks.length < 6) {
-        if (date.getYear() === startYear && date.getMonth() > startMonth) {
+        /* commented out -- makes it so that all months have 6 weeks.  All the time
+            if (date.getYear() === startYear && date.getMonth() > startMonth) {
           break;
-        }
+        } */
         week = this.getDaysOfWeek(date);
         weeks.push(week);
         date.setDate(date.getDate() + 7);

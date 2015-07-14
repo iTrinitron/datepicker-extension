@@ -541,6 +541,10 @@
   margin-top: 5px;
   box-shadow: none;
   border-radius: 0px;
+  left: -92px;
+}
+.dropdown-menu.date-range-left {
+  left: -140px;
 }
 [date-range] {
   font-family: 'Roboto', sans-serif;
@@ -558,6 +562,11 @@
   margin-top: 8px;
   float: left;
 }
+[date-range] [date-picker] span {
+  height: 33px;
+  width: 33px;
+  line-height: 33px;
+}
 [date-range] [date-picker] .switch {
   font-weight: normal;
   text-transform: uppercase;
@@ -572,9 +581,43 @@
 [date-range] [date-picker] .active.after,
 [date-range] [date-picker] .active.active {
   color: #FFF;
-  background-color: #00c0cd;
+  background-color: #6dd2d9;
   background-image: none;
   /* The original datePicker uses a linear gradient image  */
+}
+[date-range] [date-picker] .active.after.before:hover,
+[date-range] [date-picker] .after.before:hover,
+[date-range] [date-picker] .active.after:hover,
+[date-range] [date-picker] .active.active:hover {
+  background-color: #00c0cd;
+}
+[date-range] [date-picker] .startDay.active::before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  margin-left: 20px;
+  border-top: 16px solid #6dd2d9;
+  border-bottom: 16px solid #6dd2d9;
+  border-left: 6px solid #00c0cd;
+  -moz-transform: scale(0.9999);
+}
+[date-range] [date-picker] .endDay.active::before {
+  position: absolute;
+  content: "";
+  width: 0px;
+  height: 0px;
+  margin-left: -12px;
+  border-top: 16px solid #6dd2d9;
+  border-bottom: 16px solid #6dd2d9;
+  border-right: 6px solid #00c0cd;
+  -moz-transform: scale(0.9999);
+}
+[date-range] [date-picker] .startDay.active.after {
+  background-color: #00c0cd;
+}
+[date-range] [date-picker] .endDay.active.before {
+  background-color: #00c0cd;
 }
 [date-range] [date-picker] .day {
   color: #00c0cd;
@@ -643,13 +686,13 @@
   left: 25px;
 }
 [date-picker-app] .triangle-left {
-  left: 25px;
+  left: 160px;
 }
 [date-picker-app] .triangle-right {
   left: 250px;
 }
 [date-picker-app] .triangle-single-right {
-  left: 150px !important;
+  left: 227px !important;
 }
 [date-picker-app] .tri-up:before,
 [date-picker-app] .tri-up:after {

@@ -10,7 +10,7 @@
       <tbody>
       <tr ng-repeat="week in weeks">
         <td ng-repeat="day in week">
-          <span ng-class="{'day':true, 'now':isNow(day) && false,'active':isSameDay(day),'disabled':isDisabled(day, date),'after':isAfter(day),'before':isBefore(day)}"
+          <span ng-class="{'day':true, 'now':isNow(day) && false,'active':isSameDay(day) && !isDisabled(day, date),'disabled':isDisabled(day, date),'after':isAfter(day),'before':isBefore(day), 'startDay':isStartDay(day) && !isDisabled(day, date), 'endDay':isEndDay(day) && !isDisabled(day, date)}"
                 ng-click="setDate(day, date, $event)" ng-bind="day.getDate()">
           </span>
         </td>

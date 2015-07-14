@@ -288,9 +288,15 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       };
 
       scope.isSameDay = function (date) {
-        return (datePickerUtils.isSameDay(datePickerApp.getSelectedStartDate(), date) || datePickerUtils.isSameDay(datePickerApp.getSelectedEndDate(), date));
+        return (scope.isStartDay(date) || scope.isEndDay(date));
+      };
       
-        //return datePickerUtils.isSameDay(scope.model, date);
+      scope.isStartDay = function(date) {
+          return datePickerUtils.isSameDay(datePickerApp.getSelectedStartDate(), date);
+      };
+      
+      scope.isEndDay = function(date) {
+          return datePickerUtils.isSameDay(datePickerApp.getSelectedEndDate(), date);
       };
 
       scope.isSameHour = function (date) {
@@ -416,9 +422,10 @@ angular.module('datePicker').factory('datePickerUtils', function(){
       var weeks = [];
       var week;
       while (weeks.length < 6) {
-        if (date.getYear() === startYear && date.getMonth() > startMonth) {
+        /* commented out -- makes it so that all months have 6 weeks.  All the time
+            if (date.getYear() === startYear && date.getMonth() > startMonth) {
           break;
-        }
+        } */
         week = this.getDaysOfWeek(date);
         weeks.push(week);
         date.setDate(date.getDate() + 7);
@@ -537,7 +544,29 @@ Module.directive('dateRange', function () {
             start: '=',
             end: '='
         },
+        controller: function($scope) {
+            $scope.isPrevMonthValid = false;
+            $scope.currentViewDate = new Date();
+        },
         link: function (scope, element, attrs, cntrl) {
+            /*
+             * evaluatePrevMonthValid
+             * 
+             * Updates the isPrevMonthValid flag by checking if the previous
+             * month of the current view date is before today's date.
+             * 
+             * @returns {undefined}
+             */
+            function evaluatePrevMonthValid() {
+                scope.prevViewDate = cntrl.getPrevMonth(scope.currentViewDate);
+                var today = new Date();
+                if(scope.prevViewDate.getTime() < today.getTime()) {
+                    scope.isPrevMonthValid = false;
+                    return;
+                }
+                scope.isPrevMonthValid = true;
+            }
+            
             /* 
              * Broadcast Event
              * 
@@ -547,11 +576,23 @@ Module.directive('dateRange', function () {
              * @author Michael C
              */
             scope.next = function () {
+                incViewDate();
+                evaluatePrevMonthValid();
                 scope.$broadcast("next");
             };
             scope.prev = function() {
+                decViewDate();
+                evaluatePrevMonthValid();
                 scope.$broadcast("prev");
             };
+            
+            function incViewDate() {
+                scope.currentViewDate = cntrl.getNextMonth(scope.currentViewDate);
+            }
+            
+            function decViewDate() {
+                scope.currentViewDate = cntrl.getPrevMonth(scope.currentViewDate);
+            }
             
             /*
             * Listener
@@ -652,12 +693,10 @@ Module.directive('dateInput', function() {
  */
 
 
-
-
 /*
  * datePickerApp Directive
  */
-Module.directive('datePickerApp', function () {
+Module.directive('datePickerApp', ['$timeout', function($timeout) {
   return {
     templateUrl: '/etc/designs/site/cc/js/common/angular-dateRangePicker/templates/datepickerapp.html',
     scope: {
@@ -674,7 +713,8 @@ Module.directive('datePickerApp', function () {
         minEndDate: '@',
         maxEndDate: '@',
         maxEndDateOffset: '@',
-        maxStartDateOffset: '@'
+        maxStartDateOffset: '@',
+        closeDelay: '@'
     },
     //Define controller functions to be passed down to the datePicker directive
     controller: ["$scope", function($scope) {
@@ -696,13 +736,14 @@ Module.directive('datePickerApp', function () {
         $scope.startIsFocused = false;
         $scope.endIsFocused = false;
         
+        $scope.closeDelay = ($scope.closeDelay || 1000);
+        
         $scope.dateOutputFormat = ($scope.dateOutputFormat || "MMM DD YYYY");
         $scope.startPlaceholderText = ($scope.startPlaceholderText || "");
         $scope.endPlaceholderText = ($scope.endPlaceholderText || "");
         
         $scope.$watch('formStartDate', function(value) {
             $scope.selectedStartDate = new Date(value);
-            console.log("startdate is " + $scope.formStartDate);
         });
         $scope.$watch('formEndDate', function(value) {
             $scope.selectedEndDate = new Date(value);
@@ -755,10 +796,9 @@ Module.directive('datePickerApp', function () {
                 this.closeDateRange(); 
             }
             //Cycle through start --> end --> close
-            /* Toggle is off for this build
             else if($scope.viewMode == "singleDate") {
                 $scope.startCal ? this.toggleStartCal() : this.closeDateRange();
-            } */
+            }
             else {
                 this.closeDateRange(); 
             }
@@ -769,10 +809,14 @@ Module.directive('datePickerApp', function () {
          * @return boolean
          */
         $scope.openDateRange = function() {
+            $timeout.cancel($scope.closeTimeout); //clear any timeouts
             $scope.isOpen = true;
         };
         this.closeDateRange = function() {
-            $scope.isOpen = false;
+            //Create a timeout to delay the close
+            $scope.closeTimeout = $timeout(function() {
+                $scope.isOpen = false;
+            }, $scope.closeDelay);
         };
         
         /*
@@ -885,7 +929,22 @@ Module.directive('datePickerApp', function () {
             }
             return new Date(date.getFullYear(), date.getMonth() + 1, 1);
         };
-         
+        
+        /*
+         * getPrevMonth
+         * 
+         * Returns a new date object that is one month before the passed date
+         * object
+         * 
+         * @param javascript Date object
+         * @returns javascript Date object
+         */
+        this.getPrevMonth = function(date) {
+            if (date == 1) {
+                return new Date(date.getFullYear() - 1, 0, 1);
+            }
+            return new Date(date.getFullYear(), date.getMonth(), 0);
+        };
     }],
     link: function (scope, element, attrs) {
         //Default to the "L" format
@@ -1025,7 +1084,6 @@ Module.directive('datePickerApp', function () {
          */
         function setSelectedStartDate(date) {
             scope.selectedStartDate = date;
-            console.log("date*******" + date);
             
             if(isDate(date)) {scope.formStartDate = date.toISOString();} 
            //setFormStartDate(date);
@@ -1084,7 +1142,7 @@ Module.directive('datePickerApp', function () {
         });
     }
   };
-});
+}]);
 
 
 var PRISTINE_CLASS = 'ng-pristine',

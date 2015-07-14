@@ -17,7 +17,29 @@ Module.directive('dateRange', function () {
             start: '=',
             end: '='
         },
+        controller: function($scope) {
+            $scope.isPrevMonthValid = false;
+            $scope.currentViewDate = new Date();
+        },
         link: function (scope, element, attrs, cntrl) {
+            /*
+             * evaluatePrevMonthValid
+             * 
+             * Updates the isPrevMonthValid flag by checking if the previous
+             * month of the current view date is before today's date.
+             * 
+             * @returns {undefined}
+             */
+            function evaluatePrevMonthValid() {
+                scope.prevViewDate = cntrl.getPrevMonth(scope.currentViewDate);
+                var today = new Date();
+                if(scope.prevViewDate.getTime() < today.getTime()) {
+                    scope.isPrevMonthValid = false;
+                    return;
+                }
+                scope.isPrevMonthValid = true;
+            }
+            
             /* 
              * Broadcast Event
              * 
@@ -27,11 +49,23 @@ Module.directive('dateRange', function () {
              * @author Michael C
              */
             scope.next = function () {
+                incViewDate();
+                evaluatePrevMonthValid();
                 scope.$broadcast("next");
             };
             scope.prev = function() {
+                decViewDate();
+                evaluatePrevMonthValid();
                 scope.$broadcast("prev");
             };
+            
+            function incViewDate() {
+                scope.currentViewDate = cntrl.getNextMonth(scope.currentViewDate);
+            }
+            
+            function decViewDate() {
+                scope.currentViewDate = cntrl.getPrevMonth(scope.currentViewDate);
+            }
             
             /*
             * Listener

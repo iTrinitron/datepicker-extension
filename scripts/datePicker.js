@@ -288,9 +288,15 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       };
 
       scope.isSameDay = function (date) {
-        return (datePickerUtils.isSameDay(datePickerApp.getSelectedStartDate(), date) || datePickerUtils.isSameDay(datePickerApp.getSelectedEndDate(), date));
+        return (scope.isStartDay(date) || scope.isEndDay(date));
+      };
       
-        //return datePickerUtils.isSameDay(scope.model, date);
+      scope.isStartDay = function(date) {
+          return datePickerUtils.isSameDay(datePickerApp.getSelectedStartDate(), date);
+      };
+      
+      scope.isEndDay = function(date) {
+          return datePickerUtils.isSameDay(datePickerApp.getSelectedEndDate(), date);
       };
 
       scope.isSameHour = function (date) {

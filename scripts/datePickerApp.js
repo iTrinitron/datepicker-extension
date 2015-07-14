@@ -6,12 +6,10 @@
  */
 
 
-
-
 /*
  * datePickerApp Directive
  */
-Module.directive('datePickerApp', function () {
+Module.directive('datePickerApp', ['$timeout', function($timeout) {
   return {
     templateUrl: '/etc/designs/site/cc/js/common/angular-dateRangePicker/templates/datepickerapp.html',
     scope: {
@@ -28,7 +26,8 @@ Module.directive('datePickerApp', function () {
         minEndDate: '@',
         maxEndDate: '@',
         maxEndDateOffset: '@',
-        maxStartDateOffset: '@'
+        maxStartDateOffset: '@',
+        closeDelay: '@'
     },
     //Define controller functions to be passed down to the datePicker directive
     controller: ["$scope", function($scope) {
@@ -50,13 +49,14 @@ Module.directive('datePickerApp', function () {
         $scope.startIsFocused = false;
         $scope.endIsFocused = false;
         
+        $scope.closeDelay = ($scope.closeDelay || 1000);
+        
         $scope.dateOutputFormat = ($scope.dateOutputFormat || "MMM DD YYYY");
         $scope.startPlaceholderText = ($scope.startPlaceholderText || "");
         $scope.endPlaceholderText = ($scope.endPlaceholderText || "");
         
         $scope.$watch('formStartDate', function(value) {
             $scope.selectedStartDate = new Date(value);
-            console.log("startdate is " + $scope.formStartDate);
         });
         $scope.$watch('formEndDate', function(value) {
             $scope.selectedEndDate = new Date(value);
@@ -109,10 +109,9 @@ Module.directive('datePickerApp', function () {
                 this.closeDateRange(); 
             }
             //Cycle through start --> end --> close
-            /* Toggle is off for this build
             else if($scope.viewMode == "singleDate") {
                 $scope.startCal ? this.toggleStartCal() : this.closeDateRange();
-            } */
+            }
             else {
                 this.closeDateRange(); 
             }
@@ -123,10 +122,14 @@ Module.directive('datePickerApp', function () {
          * @return boolean
          */
         $scope.openDateRange = function() {
+            $timeout.cancel($scope.closeTimeout); //clear any timeouts
             $scope.isOpen = true;
         };
         this.closeDateRange = function() {
-            $scope.isOpen = false;
+            //Create a timeout to delay the close
+            $scope.closeTimeout = $timeout(function() {
+                $scope.isOpen = false;
+            }, $scope.closeDelay);
         };
         
         /*
@@ -239,7 +242,22 @@ Module.directive('datePickerApp', function () {
             }
             return new Date(date.getFullYear(), date.getMonth() + 1, 1);
         };
-         
+        
+        /*
+         * getPrevMonth
+         * 
+         * Returns a new date object that is one month before the passed date
+         * object
+         * 
+         * @param javascript Date object
+         * @returns javascript Date object
+         */
+        this.getPrevMonth = function(date) {
+            if (date == 1) {
+                return new Date(date.getFullYear() - 1, 0, 1);
+            }
+            return new Date(date.getFullYear(), date.getMonth(), 0);
+        };
     }],
     link: function (scope, element, attrs) {
         //Default to the "L" format
@@ -379,7 +397,6 @@ Module.directive('datePickerApp', function () {
          */
         function setSelectedStartDate(date) {
             scope.selectedStartDate = date;
-            console.log("date*******" + date);
             
             if(isDate(date)) {scope.formStartDate = date.toISOString();} 
            //setFormStartDate(date);
@@ -438,4 +455,4 @@ Module.directive('datePickerApp', function () {
         });
     }
   };
-});
+}]);

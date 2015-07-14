@@ -1363,8 +1363,16 @@
   margin-top: 5px;
   box-shadow: none;
   border-radius: 0px;
-}
+  left: -92px;
+    //Control where the container lies on the left
+    &.date-range-left {
+        left: -140px;
+    }
+    //Control where the container lies on the right
+    &.date-range-right {
 
+    }
+}
 
 [date-range] {
   font-family: 'Roboto', sans-serif;
@@ -1381,6 +1389,14 @@
   [date-picker] {
 	margin-top: 8px;
 	float: left;
+        
+        span {
+            //Fix the blocks as squares
+            height: 33px;
+            width: 33px;
+            line-height: 33px;
+        }
+        
     //Month header of each datePicker container -- ex. "July"
     .switch {
       font-weight: normal;
@@ -1394,8 +1410,41 @@
     //Days that are selected
     .active.after.before, .after.before, .active.after, .active.active {
       color: #FFF;
-      background-color: #00c0cd;
+      background-color: #6dd2d9;
       background-image: none; /* The original datePicker uses a linear gradient image  */
+    }
+    .active.after.before:hover, .after.before:hover, .active.after:hover, .active.active:hover {
+      background-color: #00c0cd;
+    }
+    //Start Day
+    .startDay.active::before {
+        position: absolute;
+        content: "";
+        width: 0; 
+	height: 0; 
+        margin-left: 20px;
+	border-top:16px solid #6dd2d9;  
+        border-bottom:16px solid #6dd2d9; 
+        border-left: 6px solid #00c0cd;
+        -moz-transform: scale(.9999);
+    }
+    .endDay.active::before {
+        position: absolute;
+        content: "";
+        width: 0px;
+        height: 0px;
+        margin-left: -12px;
+        border-top: 16px solid #6dd2d9; 
+	border-bottom: 16px solid #6dd2d9; 
+        border-right: 6px solid #00c0cd; 
+        -moz-transform: scale(.9999);
+    }
+    .startDay.active.after {
+        background-color: #00c0cd;
+    }
+
+    .endDay.active.before {
+        background-color: #00c0cd;
     }
     //Days that are unselected
     .day {
@@ -1481,14 +1530,14 @@
     left: 25px;
   }
   .triangle-left {
-    left: 25px;
+    left: 160px;
   }
 
   .triangle-right {
     left: 250px;
   }
   .triangle-single-right {
-      left: 150px !important;
+      left: 227px !important;
   }
 
   .tri-up:before, .tri-up:after {

@@ -1,5 +1,5 @@
 <div class="dateRangeContainer">
-    <div class="arrow leftArrow" ng-click="prev();"><i class="fa fa-angle-left"></i></div>
+    <div class="arrow leftArrow" ng-click="!isPrevMonthValid || prev()"><i class="fa fa-angle-left"></i></div>
     <div class="arrow rightArrow" ng-click="next();"><i class="fa fa-angle-right"></i></div>
 
     <div date-picker="start" pid="0" control="controlLink" ng-disabled="disableDatePickers" class="date-picker" date after="start" before="end" min-view="date" max-view="date"></div>
