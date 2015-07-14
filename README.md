@@ -99,6 +99,12 @@ Default: ``
 
 Maximum end date relative to the chosen start date
 
+## close-delay
+Type: `Integer`
+Default: 1000
+
+Number of seconds that the calendar remains open after an end-date selection
+
 -------------
 
 ####Further optimization
