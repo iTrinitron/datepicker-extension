@@ -18,10 +18,10 @@ Module.directive('dateRange', function () {
             end: '=',
             isMobile: '='
         },
-        controller: function($scope) {
+        controller: ["$scope", function($scope) {
             $scope.isPrevMonthValid = false;
             $scope.currentViewDate = new Date();
-        },
+        }],
         link: function (scope, element, attrs, cntrl) {
             /*
              * evaluatePrevMonthValid
